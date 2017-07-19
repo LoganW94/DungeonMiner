@@ -10,7 +10,7 @@ FPS = 60
 
 w = World()
 u_input = User_Input()
-d = Draw_World() 
+d = Draw_World(w) 
 
 def start():
 
@@ -18,9 +18,7 @@ def start():
 
 	while not gameExit:
 
-		u_input.get_input()
-
-		w.update(u_input.direction)
+		w.update(u_input.get_input())
 
 		d.draw()
 

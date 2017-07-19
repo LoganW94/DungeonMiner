@@ -2,7 +2,7 @@ import pygame
 
 class User_Input:
 
-	def __inti__(self):
+	def __init__(self):
 
 		"""
 		 TODO Load controller config if present
@@ -18,15 +18,17 @@ class User_Input:
 			if event.type == pygame.KEYDOWN:
 				"rework so player can set key for each command"
 				key = pygame.key.name(event.key)
-				if key == 'W':
+				if key == 'w':
 					self.direction = "NORTH"
-				if key == 'S':
+				elif key == 's':
 					self.direction = "SOUTH"
-				if key == 'A':
+				elif key == 'a':
 					self.direction = "WEST"
-				if key == 'D':	
+				elif key == 'd':	
 					self.direction = "EAST"
 				else:
-					self.direction = "IDLE" 
+					self.direction = "IDLE"
+
+		return(self.direction)			 
 									
 

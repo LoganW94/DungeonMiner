@@ -22,12 +22,10 @@ display_height = 600
 
 class Draw_World:
 
-	def __inti__(self):
-		print("init")
-#		self.world = w
+	def __init__(self, world):
+		self.world = world
 		self.display = Screen.new(display_width, display_height, red, "Rouge like")
 
 	def draw(self):
 		self.display.fill(white)	
-		print("draw")
 		
