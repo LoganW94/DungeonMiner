@@ -14,9 +14,7 @@ d = Draw_World(w)
 
 def start():
 
-	gameExit = False
-
-	while not gameExit:
+	while True:
 
 		w.update(u_input.get_input())
 

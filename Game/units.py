@@ -7,9 +7,11 @@ step()
 class Units:
 
 	def __init__(self):
-		self.num_baddies = 0
-		self.num_npcs = 0
-		self.num_players = 0
+
+		self.hp = 0
+		self.strenth = 0
+		self.ap = 0
+		self.dex = 0
 
 #	def command(self):	
 

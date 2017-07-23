@@ -7,12 +7,11 @@ list of items
 
 spit out 
 """
-import units
-import npc
-import player
-import baddies
+from npc import NPC
+from player import Player
+from baddies import Baddie
 
-size = 0
+size = 20
 
 class World:
 
@@ -20,19 +19,56 @@ class World:
 		self.size = size
 		self.npc_list = []
 		self.baddie_list = []
+		self.player_list = []
 		self.map_arr =[]
+		self.num_baddies = 0
+		self.num_npcs = 0
+		self.num_players = 0
+		self.filename = "newfile"
+
+		self.new_map()
+		self.save_map()
 
 	def update(self, user_input):
 		'''
 		will iterate through all units and update their position
 		'''
-		print(user_input)	
+		print(user_input)
+
+	def new_map(self):
+		for x in range(self.size):
+			for y in range(self.size):
+				row = []
+				objects =[]
+				"TODO: get location and pass though spawn into unit constructor"
+				self.spawn_baddie()
+
+
+	def save_map(self):
+		filename = self.filename + ".txt"
+		f = open(filename, 'w+')
+		for x in range(self.size):
+			#print(x)
+			f.write(self.map_arr[x])
+		f.close					
 
 #	def load_map(self):
 
-#	def spawn_player(self):
+	def spawn_player(self):
+		player = Player()
+		self.player_list.append(player)
+		self.num_players +=1
+		return(player)
 
-#	def spawn_baddie(self):
+	def spawn_baddie(self):
+		baddie = Baddie()
+		self.baddie_list.append(baddie)
+		self.num_baddies += 1
+		return(baddie)
 
-#	def spawn_npc(self):	
+	def spawn_npc(self):
+		npc = NPC()
+		self.npc_list.append(npc)
+		self.num_npcs += 1
+		return(npc)	
 
