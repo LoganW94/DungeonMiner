@@ -10,6 +10,7 @@ spit out
 from npc import NPC
 from player import Player
 from baddies import Baddie
+from tile import Tile
 
 size = 20
 
@@ -20,14 +21,15 @@ class World:
 		self.npc_list = []
 		self.baddie_list = []
 		self.player_list = []
+		self.unit_list = [] #"may replace the above unit lists, to allow for sorting by level for choosing turns"
 		self.map_arr =[]
 		self.num_baddies = 0
 		self.num_npcs = 0
 		self.num_players = 0
-		self.filename = "newfile"
+		self.filename = "lastsave"
 
 		self.new_map()
-		self.save_map()
+		#self.save_map()
 
 	def update(self, user_input):
 		'''
@@ -36,23 +38,31 @@ class World:
 		print(user_input)
 
 	def new_map(self):
+		row = []
 		for x in range(self.size):
 			for y in range(self.size):
-				row = []
-				objects =[]
-				"TODO: get location and pass though spawn into unit constructor"
-				self.spawn_baddie()
+				cell =[]
+				location = (x,y)
+				cell.append(new_tile(location))
+				row.append(cell)
+			self.map_arr.append(row)
 
+#	def load_map(self):			
 
 	def save_map(self):
-		filename = self.filename + ".txt"
+		filename = "saves/" + self.filename + ".txt"
 		f = open(filename, 'w+')
 		for x in range(self.size):
-			#print(x)
-			f.write(self.map_arr[x])
-		f.close					
+			print(self.map_arr[x])
+			string = ''.join(self.map_arr[x])
+			f.write(string)
+		f.close
 
-#	def load_map(self):
+#   def load_save(self):
+
+	def new_tile(self, location):
+		tile = Tile(location)
+		return(tile)							
 
 	def spawn_player(self):
 		player = Player()
@@ -60,8 +70,8 @@ class World:
 		self.num_players +=1
 		return(player)
 
-	def spawn_baddie(self):
-		baddie = Baddie()
+	def spawn_baddie(self, location):
+		baddie = Baddie(location)
 		self.baddie_list.append(baddie)
 		self.num_baddies += 1
 		return(baddie)
@@ -70,5 +80,7 @@ class World:
 		npc = NPC()
 		self.npc_list.append(npc)
 		self.num_npcs += 1
-		return(npc)	
+		return(npc)		
 
+	def return_world(self):
+		return(self.map_arr)	

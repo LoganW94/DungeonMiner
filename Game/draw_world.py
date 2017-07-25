@@ -22,10 +22,9 @@ display_height = 600
 
 class Draw_World:
 
-	def __init__(self, world):
-		self.world = world
+	def __init__(self):
 		self.display = Screen.new(display_width, display_height, red, "Rouge like")
 
-	def draw(self):
+	def draw(self, map_arr):
 		self.display.fill(white)	
 		

@@ -2,5 +2,5 @@ from units import Units
 
 class NPC(Units):
 
-	def __init__(self):
-		self.hp = 0
+	def __init__(self, location):
+		Units.__init__(self, location)

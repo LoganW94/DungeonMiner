@@ -10,7 +10,7 @@ FPS = 60
 
 w = World()
 u_input = User_Input()
-d = Draw_World(w) 
+d = Draw_World() 
 
 def start():
 
@@ -18,7 +18,7 @@ def start():
 
 		w.update(u_input.get_input())
 
-		d.draw()
+		d.draw(w.return_world())
 
 		pygame.display.update()
 		clock.tick(FPS)
