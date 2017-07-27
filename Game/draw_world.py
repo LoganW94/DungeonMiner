@@ -5,6 +5,7 @@ gets map_arr from world
 """
 from screen import Screen
 import pygame
+from camera import Camera
 
 "colors"
 white = (255,255,255)
@@ -23,8 +24,14 @@ display_height = 600
 class Draw_World:
 
 	def __init__(self):
-		self.display = Screen.new(display_width, display_height, red, "Rouge like")
+		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
+		self.cam = Camera(display_height, display_width)
 
-	def draw(self, map_arr):
-		self.display.fill(white)	
+	def draw(self, world):
+		self.display.fill(white)
+		"should check to see if tile is visible to camera, and if so draws it."
+		for x in range(world.size):
+			for y in range(world.size):
+				tile = world.map_arr[x][y][0]
+				
 		

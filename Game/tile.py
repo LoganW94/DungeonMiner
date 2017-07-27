@@ -13,4 +13,10 @@ class Tile:
 
 	def __init__(self, location):
 		self.location = location
-		self.color = green
+		self.ID = "004"
+
+	def tile_info(self):
+		tile = {}
+		tile["Location"] = self.location
+		tile["ID"] = self.ID
+		return(tile)

@@ -4,11 +4,12 @@ class Units:
 
 	def __init__(self, location):
 
+		self.ID = None
 		self.hp = 0
-		self.strenth = 0
+		self.str = 0
 		self.ap = 0
 		self.dex = 0
-		self.speed = 0
+		self.sp = 0
 		self.default_state = "IDLE"
 		self.previous_state = self.default_state
 		self.current_state = self.default_state
@@ -30,6 +31,22 @@ class Units:
 		elif input == self.default_state:
 			self.idle_state()
 			self.update_states(input)
+
+	def unit_info(self):
+		state = {}
+		state["HP"] = self.hp
+		state["STR"] = self.str
+		state["AP"] = self.ap
+		state["DEX"] = self.dex
+		state["SP"] = self.sp
+		state["Location"] = self.location
+		state["Current State"] = self.current_state
+#		state[""] = self.
+#		state[""] = self.
+#		state[""] = self.
+#		state[""] = self.
+#		state[""] = self.
+		return(state)		
 
 	def step_back(self):
 		"goes back one step. sets previous state to IDLE"

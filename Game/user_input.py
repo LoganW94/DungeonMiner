@@ -31,4 +31,4 @@ class User_Input:
 
 		return(self.direction)			 
 									
-
+#	def controller_config(self):
