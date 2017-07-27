@@ -27,11 +27,12 @@ class Draw_World:
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
 		self.cam = Camera(display_height, display_width)
 
-	def draw(self, world):
+	def draw(self, world_json):
 		self.display.fill(white)
+		map_arr = world_json["Map"]
 		"should check to see if tile is visible to camera, and if so draws it."
-		for x in range(world.size):
-			for y in range(world.size):
-				tile = world.map_arr[x][y][0]
+		for x in range(world_json["Size"]):
+			for y in range(world_json["Size"]):
+				tile = map_arr[x][y][0]
 				
 		

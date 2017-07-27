@@ -18,7 +18,7 @@ def start():
 
 		w.update(u_input.get_input())
 
-		d.draw(w)
+		d.draw(w.return_world())
 
 		pygame.display.update()
 		clock.tick(FPS)

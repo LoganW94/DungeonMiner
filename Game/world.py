@@ -11,6 +11,7 @@ from npc import NPC
 from player import Player
 from baddies import Baddie
 from tile import Tile
+import json
 
 size = 20
 
@@ -28,8 +29,11 @@ class World:
 		self.filename = "lastsave"
 		self.world_json = {}
 
+		"temp code for testing"
 		self.new_map()
-		#self.save_map()
+		self.spawn_player((0,0))
+		self.format_world()
+		self.save_map()
 
 	def update(self, user_input):
 		'''
@@ -39,8 +43,8 @@ class World:
 
 	def new_map(self):
 		self.size = size
-		row = []
 		for x in range(self.size):
+			row = []
 			for y in range(self.size):
 				cell =[]
 				location = (x,y)
@@ -49,18 +53,34 @@ class World:
 			self.map_arr.append(row)
 
 	def load_map(self):
-		self.size = size	
+		self.size = size
+		filename = "saves/" + self.filename + ".txt"	
+		with open(filename, 'r') as infile:
+			self.world_json = json.load(infile)
+			infile.close
 
-	def format_world(self):	
-		self.world_json["map"] = self.map_arr
-		self.world_json["size"] = self.size
-		self.world_json["player"] = self.player_info	
+	def format_world(self):
+		json_map = []
+		for x in range(self.size):
+			row = []
+			for y in range(self.size):
+				cell = []
+				tile = self.map_arr[x][y][0]
+				cell.append(tile.tile_info())
+				row.append(cell)
+			json_map.append(row)	
+
+		self.world_json["Map"] = json_map
+		self.world_json["Size"] = self.size
+		self.world_json["Player"] = self.player_info
+		self.world_json["Baddies"] = self.baddie_list
+		self.world_json["NPCs"] = self.npc_list	
 
 	def save_map(self):
 		filename = "saves/" + self.filename + ".txt"
-		f = open(filename, 'w+')
-		
-		f.close
+		with open(filename, 'w') as outfile:
+			json.dump(self.world_json, outfile)
+		outfile.close
 
 #   def load_save(self):
 
@@ -69,11 +89,11 @@ class World:
 		tile = Tile(location)
 		return(tile)							
 
-	def spawn_player(self):
-		player = Player()
+	def spawn_player(self, location):
+		player = Player(location)
 		self.num_players +=1
 		self.player_info = player.unit_info()
-		print(player_state)
+		print(self.player_info)
 		return(player)
 
 	def spawn_baddie(self, location):
