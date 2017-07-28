@@ -27,7 +27,9 @@ class Units:
 		else:
 			self.idle_state()
 
-		self.update_states(input)	
+		self.update_states(input)
+		#info = self.unit_info()
+		return(self.unit_info())	
 
 	def set_unit_info(self, state):
 		self.hp = state["HP"]
@@ -70,28 +72,24 @@ class Units:
 		unit_y = self.location[1]
 		unit_y -=1
 		self.location = (unit_x, unit_y)
-		print("moved north")
 
 	def move_south(self):
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_y +=1
 		self.location = (unit_x, unit_y)
-		print("moved south")
 
 	def move_east(self):
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x +=1
 		self.location = (unit_x, unit_y)
-		print("moved east")
 
 	def move_west(self):
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x -=1
 		self.location = (unit_x, unit_y)
-		print("moved west")
 
 	def idle_state(self):
 		print("stood still")	

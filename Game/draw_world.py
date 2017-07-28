@@ -44,7 +44,7 @@ class Draw_World:
 				self.draw_tile(tile, ID)
 		for x in range(len(world_json["Units"])):
 			unit = world_json["Units"][x]
-			ID = unit[0]["ID"]
+			ID = unit["ID"]
 			self.draw_unit(unit, ID)		
 
 	def draw_tile(self, tile, ID):
@@ -61,7 +61,7 @@ class Draw_World:
 		elif self.id_list[ID] == "Dirt":
 			color = orange
 		else:
-			color = white				
+			color = red				
 		"tile color"	
 		self.display.fill(color, rect = ((tile_x, tile_y), (tile_size, tile_size)))
 		"outline"
@@ -71,7 +71,7 @@ class Draw_World:
 		self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
 
 	def draw_unit(self, unit, ID):
-		location = unit[0]["Location"]
+		location = unit["Location"]
 		unit_x = location[0] * tile_size
 		unit_y = location[1] * tile_size
 

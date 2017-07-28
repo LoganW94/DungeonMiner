@@ -39,19 +39,15 @@ class World:
 		self.save_map()
 
 	def update(self, user_input, ai_input):
+		self.info_list = []
 		for x in self.unit_list:
 			if x.ID == "001":
-				x.step(user_input)
+				self.info_list.append(x.step(user_input))
 			else:
-				x.step(ai_input)
+				self.info_list.append(x.step(ai_input))
 
-		self.info_list = []
-		i = 0
-		for x in self.json_map:
-			self.info_list.append(x[i])
-			i+=1
-
-		self.format_world()				
+		self.format_world()
+						
 
 	def new_map(self):
 		self.size = size
