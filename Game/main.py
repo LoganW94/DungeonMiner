@@ -15,8 +15,10 @@ d = Draw_World()
 def start():
 
 	while True:
+		#ai = Artificial_Intelligence()
+		p_input = u_input.get_input()
 
-		w.update(u_input.get_input())
+		w.update(p_input)
 
 		d.draw(w.return_world())
 

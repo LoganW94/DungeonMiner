@@ -32,8 +32,18 @@ class Units:
 			self.idle_state()
 			self.update_states(input)
 
+	def set_unit_info(self, state):
+		self.hp = state["HP"]
+		self.str = state["STR"]
+		self.ap = state["AP"]
+		self.dex = state["DEX"]
+		self.sp = state["SP"]
+		self.location = state["Location"]
+		self.current_state = state["Current State"]	
+
 	def unit_info(self):
 		state = {}
+		state["ID"] = self.ID
 		state["HP"] = self.hp
 		state["STR"] = self.str
 		state["AP"] = self.ap

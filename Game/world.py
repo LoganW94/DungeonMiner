@@ -13,7 +13,7 @@ from baddies import Baddie
 from tile import Tile
 import json
 
-size = 20
+size = 50
 
 class World:
 
@@ -70,20 +70,18 @@ class World:
 				row.append(cell)
 			json_map.append(row)	
 
-		self.world_json["Map"] = json_map
-		self.world_json["Size"] = self.size
 		self.world_json["Player"] = self.player_info
 		self.world_json["Baddies"] = self.baddie_list
 		self.world_json["NPCs"] = self.npc_list	
+		self.world_json["Map"] = json_map
+		self.world_json["Size"] = self.size
+		
 
 	def save_map(self):
 		filename = "saves/" + self.filename + ".txt"
 		with open(filename, 'w') as outfile:
 			json.dump(self.world_json, outfile)
 		outfile.close
-
-#   def load_save(self):
-
 
 	def new_tile(self, location):
 		tile = Tile(location)

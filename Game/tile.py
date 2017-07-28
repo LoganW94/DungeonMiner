@@ -1,3 +1,5 @@
+from random import randint
+
 "colors"
 white = (255,255,255)
 black = (0,0,0)
@@ -13,7 +15,13 @@ class Tile:
 
 	def __init__(self, location):
 		self.location = location
-		self.ID = "004"
+		ids = {
+		0: "004",
+		1: "005",
+		2: "006",
+		3: "007"}
+
+		self.ID = ids[randint(0,3)]
 
 	def tile_info(self):
 		tile = {}
