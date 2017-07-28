@@ -14,7 +14,7 @@ black = (0,0,0)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
-grey = (211,211,211)
+grey = (200,200,200)
 yellow = (255,255,0)
 violet = (160,10,226)
 orange = (255,165,0)
@@ -42,6 +42,10 @@ class Draw_World:
 				tile = map_arr[x][y][0]
 				ID = tile["ID"]
 				self.draw_tile(tile, ID)
+		for x in range(len(world_json["Units"])):
+			unit = world_json["Units"][x]
+			ID = unit[0]["ID"]
+			self.draw_unit(unit, ID)		
 
 	def draw_tile(self, tile, ID):
 		location = tile["Location"]
@@ -57,15 +61,35 @@ class Draw_World:
 		elif self.id_list[ID] == "Dirt":
 			color = orange
 		else:
-			color = red				
-
+			color = white				
+		"tile color"	
 		self.display.fill(color, rect = ((tile_x, tile_y), (tile_size, tile_size)))
-
+		"outline"
 		self.display.fill(black, rect = ((tile_x, tile_y), (1, tile_size)))
 		self.display.fill(black, rect = ((tile_x, tile_y), (tile_size, 1)))
 		self.display.fill(black, rect = ((tile_x + tile_size, tile_y), (1, tile_size)))
 		self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
 
-#	def draw_player(self):	
+	def draw_unit(self, unit, ID):
+		location = unit[0]["Location"]
+		unit_x = location[0] * tile_size
+		unit_y = location[1] * tile_size
+
+		if self.id_list[ID] == "Player":
+			color = violet
+		elif self.id_list[ID] == "NPC":
+			color = yellow 
+		elif self.id_list[ID] == "Baddie":
+			color = red
+		else:
+			color = white
+
+		"unit color"	
+		self.display.fill(color, rect = ((unit_x, unit_y), (tile_size, tile_size)))
+		"outline"
+		self.display.fill(black, rect = ((unit_x, unit_y), (1, tile_size)))
+		self.display.fill(black, rect = ((unit_x, unit_y), (tile_size, 1)))
+		self.display.fill(black, rect = ((unit_x + tile_size, unit_y), (1, tile_size)))
+		self.display.fill(black, rect = ((unit_x, unit_y + tile_size), (tile_size, 1)))	
 
 		
