@@ -27,7 +27,7 @@ class Draw_World:
 
 	def __init__(self):
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
-		self.cam = Camera(display_height, display_width)
+		self.cam = Camera(display_height, display_width, tile_size)
 
 		with open("ID_list.txt", 'r') as infile:
 			self.id_list = json.load(infile)
@@ -36,21 +36,26 @@ class Draw_World:
 	def draw(self, world_json):
 		self.display.fill(black)
 		map_arr = world_json["Map"]
+		for x in range(len(world_json["Units"])):
+			unit = world_json["Units"][x]
+			if unit["ID"] == "001":
+				self.cam.update(unit["Location"])
+
 		"should check to see if tile is visible to camera, and if so draws it."
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]
-				ID = tile["ID"]
-				self.draw_tile(tile, ID)
+				self.draw_tile(tile)
+
 		for x in range(len(world_json["Units"])):
 			unit = world_json["Units"][x]
-			ID = unit["ID"]
-			self.draw_unit(unit, ID)		
+			self.draw_unit(unit)		
 
-	def draw_tile(self, tile, ID):
+	def draw_tile(self, tile):
 		location = tile["Location"]
-		tile_x = location[0] * tile_size
-		tile_y = location[1] * tile_size
+		ID = tile["ID"]
+		tile_x = location[0] * tile_size - self.cam.location[0]
+		tile_y = location[1] * tile_size - self.cam.location[1]
 
 		if self.id_list[ID] == "Grass":
 			color = green
@@ -70,16 +75,23 @@ class Draw_World:
 		self.display.fill(black, rect = ((tile_x + tile_size, tile_y), (1, tile_size)))
 		self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
 
-	def draw_unit(self, unit, ID):
+	def draw_unit(self, unit):
 		location = unit["Location"]
-		unit_x = location[0] * tile_size
-		unit_y = location[1] * tile_size
+		ID = unit["ID"]
+
+		"should check to see if tile is visible to camera, and if so draws it."
 
 		if self.id_list[ID] == "Player":
+			unit_x = location[0] * tile_size - self.cam.location[0]
+			unit_y = location[1] * tile_size - self.cam.location[1]
 			color = violet
 		elif self.id_list[ID] == "NPC":
+			unit_x = location[0] * tile_size - self.cam.location[0]
+			unit_y = location[1] * tile_size - self.cam.location[1]
 			color = yellow 
 		elif self.id_list[ID] == "Baddie":
+			unit_x = location[0] * tile_size - self.cam.location[0]
+			unit_y = location[1] * tile_size - self.cam.location[1]
 			color = red
 		else:
 			color = white

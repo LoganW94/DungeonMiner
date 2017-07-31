@@ -68,24 +68,28 @@ class Units:
 		self.current_state = input
 
 	def move_north(self):
+		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_y -=1
 		self.location = (unit_x, unit_y)
 
 	def move_south(self):
+		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_y +=1
 		self.location = (unit_x, unit_y)
 
 	def move_east(self):
+		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x +=1
 		self.location = (unit_x, unit_y)
 
 	def move_west(self):
+		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x -=1
