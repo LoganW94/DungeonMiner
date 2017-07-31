@@ -1,12 +1,3 @@
-"""
-step() takes input and moves units
-keeps 3d array of map x,y,(items/units)
-list of NPCs
-List of Baddies
-list of items 
-
-spit out 
-"""
 from npc import NPC
 from player import Player
 from baddies import Baddie

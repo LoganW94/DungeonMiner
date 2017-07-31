@@ -25,21 +25,10 @@ class User_Input:
 			if event.type == pygame.KEYDOWN:
 				"rework so player can set key for each command"
 				key = pygame.key.name(event.key)
-				self.direction = self.keys[key]
+				if key in self.keys:
+					self.direction = self.keys[key]
 		return(self.direction)		
-	"""			
-							if self.key == 'w':
-								self.direction = "NORTH"
-							if self.key == 's':
-								self.direction = "SOUTH"
-							if self.key == 'a':
-								self.direction = "WEST"
-							if self.key == 'd':	
-								self.direction = "EAST"
-							if self.key == "c":
-								self.direction = self.default_state"""
-
-		
+	
 
 									
 #	def controller_config(self):

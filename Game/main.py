@@ -8,11 +8,13 @@ pygame.init()
 
 clock = pygame.time.Clock()
 FPS = 60
+font = pygame.font.SysFont(None, 46)
 
 w = World()
 u_input = User_Input()
 ai = Artificial_Intelligence()
-d = Draw_World() 
+d = Draw_World(font)
+ 
 
 def start():
 

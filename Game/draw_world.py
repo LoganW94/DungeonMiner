@@ -25,9 +25,10 @@ tile_size = 32
 
 class Draw_World:
 
-	def __init__(self):
+	def __init__(self, font):
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
 		self.cam = Camera(display_height, display_width, tile_size)
+		self.font = font
 
 		with open("ID_list.txt", 'r') as infile:
 			self.id_list = json.load(infile)
@@ -45,66 +46,54 @@ class Draw_World:
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]
-				self.draw_tile(tile)
+				location = tile["Location"]
+				tile_x = location[0] * tile_size - self.cam.location[0]
+				tile_y = location[1] * tile_size - self.cam.location[1]
+
+				if tile_x >= 0 and tile_y >= 0 and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
+					self.draw_tile(tile, tile_x, tile_y)
 
 		for x in range(len(world_json["Units"])):
 			unit = world_json["Units"][x]
-			self.draw_unit(unit)		
+			location = unit["Location"]
 
-	def draw_tile(self, tile):
-		location = tile["Location"]
+			unit_x = location[0] * tile_size - self.cam.location[0]
+			unit_y = location[1] * tile_size - self.cam.location[1]
+
+			if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width + tile_size and unit_y <= display_height + tile_size:
+				self.draw_unit(unit, unit_x, unit_y)		
+
+	def draw_tile(self, tile, tile_x, tile_y):
 		ID = tile["ID"]
-		tile_x = location[0] * tile_size - self.cam.location[0]
-		tile_y = location[1] * tile_size - self.cam.location[1]
 
 		if self.id_list[ID] == "Grass":
 			color = green
+			char = "#"
 		elif self.id_list[ID] == "Rock":
-			color = grey 
+			color = grey
+			char = "+" 
 		elif self.id_list[ID] == "Water":
 			color = blue
+			char = "~"
 		elif self.id_list[ID] == "Dirt":
 			color = orange
-		else:
-			color = red	
+			char = "::"
 
-		if tile_x >= 0 and tile_y >= 0 or tile_x <= display_width - tile_size and tile_y <= display_height - tile_size: 	
-			"tile color"	
-			self.display.fill(color, rect = ((tile_x, tile_y), (tile_size, tile_size)))
-			"outline"
-			self.display.fill(black, rect = ((tile_x, tile_y), (1, tile_size)))
-			self.display.fill(black, rect = ((tile_x, tile_y), (tile_size, 1)))
-			self.display.fill(black, rect = ((tile_x + tile_size, tile_y), (1, tile_size)))
-			self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
+		text = self.font.render(char, True, color)
+		self.display.blit(text, (tile_x, tile_y))		
 
-	def draw_unit(self, unit):
-		location = unit["Location"]
+	def draw_unit(self, unit, unit_x, unit_y):
 		ID = unit["ID"]
 
-		"should check to see if tile is visible to camera, and if so draws it."
-
 		if self.id_list[ID] == "Player":
-			unit_x = location[0] * tile_size - self.cam.location[0]
-			unit_y = location[1] * tile_size - self.cam.location[1]
 			color = violet
+			char = "@"
 		elif self.id_list[ID] == "NPC":
-			unit_x = location[0] * tile_size - self.cam.location[0]
-			unit_y = location[1] * tile_size - self.cam.location[1]
-			color = yellow 
+			color = yellow
+			char = "N" 
 		elif self.id_list[ID] == "Baddie":
-			unit_x = location[0] * tile_size - self.cam.location[0]
-			unit_y = location[1] * tile_size - self.cam.location[1]
 			color = red
-		else:
-			color = white
+			char = "B"
 
-		if unit_x >= 0 and unit_y >= 0 or unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:	
-			"unit color"	
-			self.display.fill(color, rect = ((unit_x, unit_y), (tile_size, tile_size)))
-			"outline"
-			self.display.fill(black, rect = ((unit_x, unit_y), (1, tile_size)))
-			self.display.fill(black, rect = ((unit_x, unit_y), (tile_size, 1)))
-			self.display.fill(black, rect = ((unit_x + tile_size, unit_y), (1, tile_size)))
-			self.display.fill(black, rect = ((unit_x, unit_y + tile_size), (tile_size, 1)))	
-
-		
+		text = self.font.render(char, True, color)
+		self.display.blit(text, (unit_x, unit_y))		

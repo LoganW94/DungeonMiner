@@ -19,6 +19,3 @@ class Camera:
 		cam_x = player_x + self.tile_size/2 - self.height/2
 		cam_y = player_y + self.tile_size/2 - self.width/2
 		self.location = (cam_x, cam_y)
-
-		
-		
