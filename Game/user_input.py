@@ -9,7 +9,11 @@ class User_Input:
 		"""
 		self.default_state = "IDLE"
 		self.direction = self.default_state
-		self.key = "c"
+		self.keys={
+		"w": "NORTH", 
+		"s": "SOUTH", 
+		"a": "WEST", 
+		"d": "EAST"}
 
 	def get_input(self):
 		self.direction = self.default_state
@@ -20,22 +24,22 @@ class User_Input:
 				quit()
 			if event.type == pygame.KEYDOWN:
 				"rework so player can set key for each command"
-				self.key = pygame.key.name(event.key)
-				if self.key == 'w':
-					self.direction = "NORTH"
-				if self.key == 's':
-					self.direction = "SOUTH"
-				if self.key == 'a':
-					self.direction = "WEST"
-				if self.key == 'd':	
-					self.direction = "EAST"
-				if self.key == "c":
-					self.direction = self.default_state
+				key = pygame.key.name(event.key)
+				self.direction = self.keys[key]
+		return(self.direction)		
+	"""			
+							if self.key == 'w':
+								self.direction = "NORTH"
+							if self.key == 's':
+								self.direction = "SOUTH"
+							if self.key == 'a':
+								self.direction = "WEST"
+							if self.key == 'd':	
+								self.direction = "EAST"
+							if self.key == "c":
+								self.direction = self.default_state"""
 
-				print(self.key)
-				print( self.direction)
-
-		return(self.direction)
+		
 
 									
 #	def controller_config(self):

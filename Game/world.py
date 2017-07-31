@@ -13,7 +13,7 @@ from baddies import Baddie
 from tile import Tile
 import json
 
-size = 50
+size = 200
 
 class World:
 
@@ -38,9 +38,8 @@ class World:
 
 		"temp code for testing"
 		self.new_map()
-		self.populate()
 		self.format_world()
-		self.save_map()
+		#self.save_map()
 
 	def update(self, user_input, ai_input):
 		self.info_list = []
@@ -69,6 +68,7 @@ class World:
 				info_row.append(info_cell)
 			self.map_arr.append(row)
 			self.json_map.append(info_row)
+		self.populate()			
 
 	def load_map(self):
 		self.size = size
