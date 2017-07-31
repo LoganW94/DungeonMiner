@@ -15,7 +15,7 @@ class Units:
 		self.current_state = self.default_state
 		self.location = location
 
-	def step(self, input):
+	def update(self, input):
 		if input == "NORTH":
 			self.move_north()
 		elif input == "EAST":
@@ -27,7 +27,7 @@ class Units:
 		else:
 			self.idle_state()
 
-		self.update_states(input)
+		#self.update_states(input)
 		return(self.unit_info())	
 
 	def set_unit_info(self, state):
@@ -58,15 +58,6 @@ class Units:
 		self.idle_state()
 		self.update_states()		
 
-	def step_back(self):
-		"goes back one step. sets previous state to IDLE"
-		self.current_state = self.previous_state
-		self.previous_state = self.default_state						
-	
-	def update_states(self, input):
-		'eventually it might be best to have a list of states that holds the last 5 or so'
-		self.previous_state = self.current_state
-		self.current_state = input
 
 	def move_north(self):
 		unit_x = self.location[0]
@@ -104,3 +95,13 @@ class Units:
 
 	def death_state(self):
 		print("died")		
+"""
+	def step_back(self):
+		"goes back one step. sets previous state to IDLE"
+		self.current_state = self.previous_state
+		self.previous_state = self.default_state						
+	
+	def update_states(self, input):
+		'eventually it might be best to have a list of states that holds the last 5 or so'
+		self.previous_state = self.current_state
+		self.current_state = input"""

@@ -8,6 +8,8 @@ import pygame
 from camera import Camera
 import json
 
+pygame.init()
+
 "colors"
 white = (255,255,255)
 black = (0,0,0)
@@ -22,10 +24,11 @@ orange = (255,165,0)
 display_width = 800
 display_height = 600
 tile_size = 32
+font = pygame.font.SysFont(None, 46)
 
-class Draw_World:
+class Draw:
 
-	def __init__(self, font):
+	def __init__(self):
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
 		self.cam = Camera(display_height, display_width, tile_size)
 		self.font = font
@@ -34,7 +37,7 @@ class Draw_World:
 			self.id_list = json.load(infile)
 			infile.close
 
-	def draw(self, world_json):
+	def draw_world(self, world_json):
 		self.display.fill(black)
 		map_arr = world_json["Map"]
 		for x in range(len(world_json["Units"])):

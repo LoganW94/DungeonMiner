@@ -14,7 +14,6 @@ class World:
 		"just holds the info to be sent to draw"
 		self.info_list = []
 		self.player_info = {}
-		"a 3d array of all objects. probably nolonger needed as is, and could be 2d since I have unit_list"
 		self.map_arr =[]
 		self.num_baddies = 0
 		self.num_npcs = 0
@@ -30,16 +29,15 @@ class World:
 		"temp code for testing"
 		self.new_map()
 		self.format_world()
-		#self.save_map()
 
 	def update(self, user_input, ai_input):
 		self.info_list = []
 
 		for x in self.unit_list:
 			if x.ID == "001":
-				self.info_list.append(x.step(user_input))
+				self.info_list.append(x.update(user_input))
 			else:
-				self.info_list.append(x.step(ai_input))
+				self.info_list.append(x.update(ai_input))
 		self.format_world()	
 						
 
@@ -52,7 +50,7 @@ class World:
 				cell =[]
 				info_cell = []
 				location = (x,y)
-				tile = Tile(location)
+				tile = self.new_tile(location)
 				cell.append(tile)
 				info_cell.append(tile.tile_info())
 				row.append(cell)

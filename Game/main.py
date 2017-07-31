@@ -1,30 +1,16 @@
 import pygame
-from world import World
-from user_input import User_Input
-from draw_world import Draw_World
-from artificial_intelligence import Artificial_Intelligence
+from game import Game
 
 pygame.init()
 
 clock = pygame.time.Clock()
 FPS = 60
-font = pygame.font.SysFont(None, 46)
 
-w = World()
-u_input = User_Input()
-ai = Artificial_Intelligence()
-d = Draw_World(font)
- 
+g = Game()
 
 def start():
-
 	while True:
-		ai_input = ai.get_input()
-		p_input = u_input.get_input()
-
-		w.update(p_input, ai_input)
-
-		d.draw(w.return_world())
+		g.run_game()	
 
 		pygame.display.update()
 		clock.tick(FPS)
