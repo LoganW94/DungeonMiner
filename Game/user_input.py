@@ -7,9 +7,12 @@ class User_Input:
 		"""
 		 TODO Load controller config if present
 		"""
-		self.direction = "IDLE"
+		self.default_state = "IDLE"
+		self.direction = self.default_state
+		self.key = "c"
 
 	def get_input(self):
+		self.direction = self.default_state
 	
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -17,18 +20,22 @@ class User_Input:
 				quit()
 			if event.type == pygame.KEYDOWN:
 				"rework so player can set key for each command"
-				key = pygame.key.name(event.key)
-				if key == 'w':
+				self.key = pygame.key.name(event.key)
+				if self.key == 'w':
 					self.direction = "NORTH"
-				elif key == 's':
+				if self.key == 's':
 					self.direction = "SOUTH"
-				elif key == 'a':
+				if self.key == 'a':
 					self.direction = "WEST"
-				elif key == 'd':	
+				if self.key == 'd':	
 					self.direction = "EAST"
-				else:
-					self.direction = "IDLE"
+				if self.key == "c":
+					self.direction = self.default_state
 
-		return(self.direction)			 
+				print(self.key)
+				print( self.direction)
+
+		return(self.direction)
+
 									
 #	def controller_config(self):

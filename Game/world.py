@@ -32,6 +32,10 @@ class World:
 		self.json_map = []
 		self.world_json = {}
 
+		self.counter = 0
+		self.wait = False
+		self.wait_time = 6
+
 		"temp code for testing"
 		self.new_map()
 		self.populate()
@@ -40,13 +44,13 @@ class World:
 
 	def update(self, user_input, ai_input):
 		self.info_list = []
+
 		for x in self.unit_list:
 			if x.ID == "001":
 				self.info_list.append(x.step(user_input))
 			else:
 				self.info_list.append(x.step(ai_input))
-
-		self.format_world()
+		self.format_world()	
 						
 
 	def new_map(self):

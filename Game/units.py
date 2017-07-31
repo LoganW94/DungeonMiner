@@ -55,7 +55,9 @@ class Units:
 #		state[""] = self.
 #		state[""] = self.
 #		state[""] = self.
-		return(state)		
+		return(state)
+		self.idle_state()
+		self.update_states()		
 
 	def step_back(self):
 		"goes back one step. sets previous state to IDLE"
@@ -68,35 +70,32 @@ class Units:
 		self.current_state = input
 
 	def move_north(self):
-		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_y -=1
 		self.location = (unit_x, unit_y)
 
 	def move_south(self):
-		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_y +=1
 		self.location = (unit_x, unit_y)
 
 	def move_east(self):
-		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x +=1
 		self.location = (unit_x, unit_y)
 
 	def move_west(self):
-		print("moved")
 		unit_x = self.location[0]
 		unit_y = self.location[1]
 		unit_x -=1
 		self.location = (unit_x, unit_y)
 
 	def idle_state(self):
-		print("stood still")	
+		self.previous_state = self.current_state
+		self.current_state = self.default_state
 
 	def attack(self):
 		print("attacked")

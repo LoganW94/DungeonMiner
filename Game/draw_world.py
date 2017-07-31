@@ -66,14 +66,16 @@ class Draw_World:
 		elif self.id_list[ID] == "Dirt":
 			color = orange
 		else:
-			color = red				
-		"tile color"	
-		self.display.fill(color, rect = ((tile_x, tile_y), (tile_size, tile_size)))
-		"outline"
-		self.display.fill(black, rect = ((tile_x, tile_y), (1, tile_size)))
-		self.display.fill(black, rect = ((tile_x, tile_y), (tile_size, 1)))
-		self.display.fill(black, rect = ((tile_x + tile_size, tile_y), (1, tile_size)))
-		self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
+			color = red	
+
+		if tile_x >= 0 and tile_y >= 0 or tile_x <= display_width - tile_size and tile_y <= display_height - tile_size: 	
+			"tile color"	
+			self.display.fill(color, rect = ((tile_x, tile_y), (tile_size, tile_size)))
+			"outline"
+			self.display.fill(black, rect = ((tile_x, tile_y), (1, tile_size)))
+			self.display.fill(black, rect = ((tile_x, tile_y), (tile_size, 1)))
+			self.display.fill(black, rect = ((tile_x + tile_size, tile_y), (1, tile_size)))
+			self.display.fill(black, rect = ((tile_x, tile_y + tile_size), (tile_size, 1)))
 
 	def draw_unit(self, unit):
 		location = unit["Location"]
@@ -96,12 +98,13 @@ class Draw_World:
 		else:
 			color = white
 
-		"unit color"	
-		self.display.fill(color, rect = ((unit_x, unit_y), (tile_size, tile_size)))
-		"outline"
-		self.display.fill(black, rect = ((unit_x, unit_y), (1, tile_size)))
-		self.display.fill(black, rect = ((unit_x, unit_y), (tile_size, 1)))
-		self.display.fill(black, rect = ((unit_x + tile_size, unit_y), (1, tile_size)))
-		self.display.fill(black, rect = ((unit_x, unit_y + tile_size), (tile_size, 1)))	
+		if unit_x >= 0 and unit_y >= 0 or unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:	
+			"unit color"	
+			self.display.fill(color, rect = ((unit_x, unit_y), (tile_size, tile_size)))
+			"outline"
+			self.display.fill(black, rect = ((unit_x, unit_y), (1, tile_size)))
+			self.display.fill(black, rect = ((unit_x, unit_y), (tile_size, 1)))
+			self.display.fill(black, rect = ((unit_x + tile_size, unit_y), (1, tile_size)))
+			self.display.fill(black, rect = ((unit_x, unit_y + tile_size), (tile_size, 1)))	
 
 		

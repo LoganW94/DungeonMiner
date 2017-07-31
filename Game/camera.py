@@ -11,14 +11,11 @@ class Camera:
 		self.height = height
 
 	def update(self, player_location):
-		"function will figure out, based on the player's location where they are in pixels, and update camera reletive to that location"
-		"in coords"
-		#print(player_location[0], player_location[1])
-
+		"converts to pixel"
 		player_x = (player_location[0] * self.tile_size)
 		player_y = (player_location[1] * self.tile_size)
 #	
-		'in pixels'
+		'moves everything to center of screen'
 		cam_x = player_x + self.tile_size/2 - self.height/2
 		cam_y = player_y + self.tile_size/2 - self.width/2
 		self.location = (cam_x, cam_y)
