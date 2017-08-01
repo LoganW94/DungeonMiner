@@ -27,7 +27,6 @@ class Units:
 		else:
 			self.idle_state()
 
-		#self.update_states(input)
 		return(self.unit_info())	
 
 	def set_unit_info(self, state):

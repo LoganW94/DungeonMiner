@@ -14,7 +14,7 @@ class Camera:
 		"converts to pixel"
 		player_x = (player_location[0] * self.tile_size)
 		player_y = (player_location[1] * self.tile_size)
-#	
+	
 		'moves everything to center of screen'
 		cam_x = player_x + self.tile_size/2 - self.height/2
 		cam_y = player_y + self.tile_size/2 - self.width/2

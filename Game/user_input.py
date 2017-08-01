@@ -14,7 +14,8 @@ class User_Input:
 		"w": "NORTH", 
 		"s": "SOUTH", 
 		"a": "WEST", 
-		"d": "EAST"}
+		"d": "EAST",
+		"return": "RETURN"}
 
 	def get_input(self):
 		self.direction = self.default_state
@@ -28,9 +29,10 @@ class User_Input:
 				key = pygame.key.name(event.key)
 				if key in self.keys:
 					self.direction = self.keys[key]
-	
-		return(self.direction)		
-	
+				else:
+					print(key)	
 
+		return(self.direction)		
 									
-#	def controller_config(self):
+	def controller_config(self):
+		""

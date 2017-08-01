@@ -6,6 +6,7 @@ class Main_Menu:
 		self.load_assets()
 		self.player_name = None
 		self.world_name = None
+		self.state = 1
 
 		self.button0 = {"txt": "New Game", "Selected": True, "function": self.new_game}
 		self.button1 = {"txt": "Load Game", "Selected": False, "function": self.new_game}
@@ -19,8 +20,6 @@ class Main_Menu:
 		2: self.button2}
 
 	def update(self, input):
-
-
 		if input == "NORTH":
 			if self.current_state == 0:
 				self.menu_state[self.current_state]["Selected"] = False
@@ -47,12 +46,14 @@ class Main_Menu:
 				self.menu_state[self.current_state]["Selected"] = False
 				self.current_state = 0
 				self.menu_state[self.current_state]["Selected"] = True
-
-			
+		elif input == "RETURN":
+			x = self.menu_state[self.current_state]["function"]		
+			x()
 		
 
 	def new_game(self):
 		"sets up basic info for player and other per game settings"
+		self.state = 2
 
 	def load_game(self):
 		"loads in a previous save"
@@ -72,7 +73,7 @@ class Main_Menu:
 			
 
 	def change_state(self):
-		""		
+		return(self.state)	
 	
 	def load_assets(self):
 		"Loads menu graphics"	

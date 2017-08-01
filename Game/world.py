@@ -2,6 +2,7 @@ from npc import NPC
 from player import Player
 from baddies import Baddie
 from tile import Tile
+from objects import Object
 import json
 
 size = 200

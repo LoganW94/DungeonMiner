@@ -67,7 +67,6 @@ class Draw:
 		y = 100
 
 		for x in menu:
-			#print(menu[x]["Selected"])
 			if menu[x]["Selected"] == True:
 				color = blue
 			else:

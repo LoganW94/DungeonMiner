@@ -17,7 +17,6 @@ class Intro_Animation:
 		self.current_text = self.texts[0]
 
 	def update(self):
-
 		if self.counter <= 100:
 			state = 0
 		elif self.counter <= 200:
