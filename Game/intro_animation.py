@@ -30,10 +30,11 @@ class Intro_Animation:
 			state = 2
 		elif self.counter <= 400:
 			state = 3
-		elif self.counter >= 500:
-			self.state = 2				
+		elif self.counter <= 500:
+			self.state = 2
+			state = 4				
 		self.current_text = self.texts[state]
-		self.counter += 1
+		self.counter += 0.5
 
 	def return_intro(self):
 		return(self.current_text)
