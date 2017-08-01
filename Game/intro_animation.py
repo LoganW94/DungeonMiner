@@ -11,8 +11,7 @@ class Intro_Animation:
 		0: "Dungeon Miner",
 		1: "Ace Games inc",
 		2: "Copyright 2017",
-		3: "Complaints dept: @realDonaldTrump",
-		4: " "}
+		3: " "}
 
 		self.current_text = self.texts[0]
 
@@ -24,10 +23,8 @@ class Intro_Animation:
 		elif self.counter <= 300:
 			state = 2
 		elif self.counter <= 400:
-			state = 3
-		elif self.counter <= 500:
 			self.state = 1
-			state = 4				
+			state = 3				
 		self.current_text = self.texts[state]
 		self.counter += 0.5
 

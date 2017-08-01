@@ -10,12 +10,12 @@ class Camera:
 		self.width = width
 		self.height = height
 
-	def update(self, player_location):
+	def update(self, location):
 		"converts to pixel"
-		player_x = (player_location[0] * self.tile_size)
-		player_y = (player_location[1] * self.tile_size)
+		x = (location[0] * self.tile_size)
+		y = (location[1] * self.tile_size)
 	
 		'moves everything to center of screen'
-		cam_x = player_x + self.tile_size/2 - self.height/2
-		cam_y = player_y + self.tile_size/2 - self.width/2
+		cam_x = x + self.tile_size/2 - self.height/2
+		cam_y = y + self.tile_size/2 - self.width/2
 		self.location = (cam_x, cam_y)

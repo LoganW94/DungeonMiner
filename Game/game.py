@@ -21,7 +21,7 @@ class Game:
 		self.game_menu = Ingame_Menu()
 
 		self.states = {0: "Intro", 1: "Main Menu", 2: "Game", 3: "Game Menu"}
-		self.current_state = 1
+		self.current_state = 0
 
 	def update(self):
 		if self.states[self.current_state] == self.states[0]:
@@ -54,7 +54,7 @@ class Game:
 
 	def ingame_menu(self):
 		p_input = self.u_input.get_input()
-		
+
 		self.game_menu.update(p_input)
 		self.d.draw_game_menu(self.game_menu.return_menu())
 	
