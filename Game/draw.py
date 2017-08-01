@@ -64,7 +64,21 @@ class Draw:
 
 	def draw_main_menu(self, menu):
 		self.display.fill(black)
-		"displays menu"
+		y = 100
+
+		for x in menu:
+			#print(menu[x]["Selected"])
+			if menu[x]["Selected"] == True:
+				color = blue
+			else:
+				color = white
+			text = menu[x]["txt"]		
+			txt_size = self.font.size(menu[x]["txt"])
+			text = self.font.render(text, True, color)
+			x = (display_width/2) - (txt_size[0]/2)
+			self.display.blit(text, (x, y))
+			y += 200
+
 
 	def draw_intro(self, intro):
 		self.display.fill(black)
@@ -73,12 +87,13 @@ class Draw:
 		txt_size = self.font.size(intro)
 		x = (display_width/2) - (txt_size[0]/2)
 		y = (display_height/2) - (txt_size[1]/2)
-		print(x,y)
 		self.display.blit(text, (x, y))	
 
 	def draw_game_menu(self, menu):
-		self.display.fill(black)
-		"displays menu"	
+		self.display.fill(black)		
+
+	def draw_HUD(self):
+		"all the stuff that displays on screen during gameplay"		
 
 	def draw_tile(self, tile, tile_x, tile_y):
 		ID = tile["ID"]

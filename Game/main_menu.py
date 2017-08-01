@@ -7,6 +7,48 @@ class Main_Menu:
 		self.player_name = None
 		self.world_name = None
 
+		self.button0 = {"txt": "New Game", "Selected": True, "function": self.new_game}
+		self.button1 = {"txt": "Load Game", "Selected": False, "function": self.new_game}
+		self.button1_alt = {"txt": "Save Game", "Selected": False, "function": self.save_game}
+		self.button2 = {"txt": "Settings", "Selected": False, "function": self.settings}
+		self.current_state = 0
+
+		self.menu_state = {
+		0: self.button0,
+		1: self.button1,
+		2: self.button2}
+
+	def update(self, input):
+
+
+		if input == "NORTH":
+			if self.current_state == 0:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 2
+				self.menu_state[self.current_state]["Selected"] = True
+			elif self.current_state == 1:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 0
+				self.menu_state[self.current_state]["Selected"] = True
+			elif self.current_state == 2:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 1
+				self.menu_state[self.current_state]["Selected"] = True
+		elif input == "SOUTH":				
+			if self.current_state == 0:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 1
+				self.menu_state[self.current_state]["Selected"] = True
+			elif self.current_state == 1:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 2
+				self.menu_state[self.current_state]["Selected"] = True
+			elif self.current_state == 2:
+				self.menu_state[self.current_state]["Selected"] = False
+				self.current_state = 0
+				self.menu_state[self.current_state]["Selected"] = True
+
+			
 		
 
 	def new_game(self):
@@ -15,11 +57,18 @@ class Main_Menu:
 	def load_game(self):
 		"loads in a previous save"
 
-	def update(self, input):
-		"does what you would expect"
+	def save_game(self):
+		""	
+
+	def settings(self):
+		"can change settings"	
 
 	def return_menu(self):
-		"returns the state"
+		self.menu_state = {
+		0: self.button0,
+		1: self.button1,
+		2: self.button2}	
+		return(self.menu_state)
 			
 
 	def change_state(self):

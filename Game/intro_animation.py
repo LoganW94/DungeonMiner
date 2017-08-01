@@ -5,20 +5,16 @@ class Intro_Animation:
 		self.load_assets()
 		self.counter = 0
 		self.state = 0
-		"temp code"
-		self.text1 = "Dungeon Miner pre pre pre alpha"
-		self.text2 = "Ace Games inc"
-		self.text3 = "Copyright 2016"
-		self.text4 = "Complaints dept: @realDonaldTrump"
-		self.text5 = " "
-		self.texts = {
-		0: self.text1,
-		1: self.text2,
-		2: self.text3,
-		3: self.text4,
-		4: self.text5}
 
-		self.current_text = self.text1
+		"temp code"
+		self.texts = {
+		0: "Dungeon Miner",
+		1: "Ace Games inc",
+		2: "Copyright 2017",
+		3: "Complaints dept: @realDonaldTrump",
+		4: " "}
+
+		self.current_text = self.texts[0]
 
 	def update(self):
 
@@ -31,7 +27,7 @@ class Intro_Animation:
 		elif self.counter <= 400:
 			state = 3
 		elif self.counter <= 500:
-			self.state = 2
+			self.state = 1
 			state = 4				
 		self.current_text = self.texts[state]
 		self.counter += 0.5

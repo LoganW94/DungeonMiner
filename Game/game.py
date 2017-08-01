@@ -24,7 +24,6 @@ class Game:
 		self.current_state = 0
 
 	def update(self):
-
 		if self.states[self.current_state] == self.states[0]:
 			self.intro_animation()
 		elif self.states[self.current_state] == self.states[1]:

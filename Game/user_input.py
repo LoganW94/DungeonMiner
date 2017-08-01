@@ -5,7 +5,8 @@ class User_Input:
 	def __init__(self):
 
 		"""
-		 TODO Load controller config if present
+		TODO: Load controller config 
+		TODO: rework keys to a txt doc loaded into all states and updated on save/controller config  
 		"""
 		self.default_state = "IDLE"
 		self.direction = self.default_state
@@ -27,6 +28,7 @@ class User_Input:
 				key = pygame.key.name(event.key)
 				if key in self.keys:
 					self.direction = self.keys[key]
+	
 		return(self.direction)		
 	
 
