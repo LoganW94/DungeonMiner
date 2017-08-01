@@ -19,17 +19,3 @@ class Artificial_Intelligence:
 
 		self.direction = self.keys[key]
 		return(self.direction)		
-
-"""
-		if key == 'w':
-			self.direction = "NORTH"
-		elif key == 's':
-			self.direction = "SOUTH"
-		elif key == 'a':
-			self.direction = "WEST"
-		elif key == 'd':	
-			self.direction = "EAST"
-		elif key == 'c':
-			self.direction = "IDLE"""
-
-		

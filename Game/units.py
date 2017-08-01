@@ -95,13 +95,3 @@ class Units:
 
 	def death_state(self):
 		print("died")		
-"""
-	def step_back(self):
-		"goes back one step. sets previous state to IDLE"
-		self.current_state = self.previous_state
-		self.previous_state = self.default_state						
-	
-	def update_states(self, input):
-		'eventually it might be best to have a list of states that holds the last 5 or so'
-		self.previous_state = self.current_state
-		self.current_state = input"""

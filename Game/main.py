@@ -10,7 +10,8 @@ g = Game()
 
 def start():
 	while True:
-		g.run_game()	
+
+		g.update()
 
 		pygame.display.update()
 		clock.tick(FPS)

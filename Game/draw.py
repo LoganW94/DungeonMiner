@@ -1,14 +1,8 @@
-"""
-draws world to screen
-
-gets map_arr from world
-"""
 from screen import Screen
 import pygame
 from camera import Camera
 import json
-
-pygame.init()
+from random import randint
 
 "colors"
 white = (255,255,255)
@@ -16,19 +10,21 @@ black = (0,0,0)
 red = (255,0,0)
 green = (0,255,0)
 blue = (0,0,255)
+light_blue = (0,0,100)
+medium_blue = (0,0,195)
 grey = (200,200,200)
 yellow = (255,255,0)
 violet = (160,10,226)
 orange = (255,165,0)
 
-display_width = 800
-display_height = 600
+display_width = 960
+display_height = 640
 tile_size = 32
-font = pygame.font.SysFont(None, 46)
+
 
 class Draw:
 
-	def __init__(self):
+	def __init__(self, font):
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
 		self.cam = Camera(display_height, display_width, tile_size)
 		self.font = font
@@ -53,7 +49,7 @@ class Draw:
 				tile_x = location[0] * tile_size - self.cam.location[0]
 				tile_y = location[1] * tile_size - self.cam.location[1]
 
-				if tile_x >= 0 and tile_y >= 0 and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
+				if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
 					self.draw_tile(tile, tile_x, tile_y)
 
 		for x in range(len(world_json["Units"])):
@@ -63,24 +59,47 @@ class Draw:
 			unit_x = location[0] * tile_size - self.cam.location[0]
 			unit_y = location[1] * tile_size - self.cam.location[1]
 
-			if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width + tile_size and unit_y <= display_height + tile_size:
-				self.draw_unit(unit, unit_x, unit_y)		
+			if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
+				self.draw_unit(unit, unit_x, unit_y)
+
+	def draw_main_menu(self, menu):
+		self.display.fill(black)
+		"displays menu"
+
+	def draw_intro(self, intro):
+		self.display.fill(black)
+		color = white
+		text = self.font.render(intro, True, color)
+		txt_size = self.font.size(intro)
+		x = (display_width/2) - (txt_size[0]/2)
+		y = (display_height/2) - (txt_size[1]/2)
+		print(x,y)
+		self.display.blit(text, (x, y))	
+
+	def draw_game_menu(self, menu):
+		self.display.fill(black)
+		"displays menu"	
 
 	def draw_tile(self, tile, tile_x, tile_y):
 		ID = tile["ID"]
 
+		colors = {
+		0: blue,
+		1: medium_blue,
+		2: light_blue}
+
 		if self.id_list[ID] == "Grass":
 			color = green
-			char = "#"
+			char = " #"
 		elif self.id_list[ID] == "Rock":
 			color = grey
-			char = "+" 
+			char = " +" 
 		elif self.id_list[ID] == "Water":
-			color = blue
-			char = "~"
+			color = colors[randint(0,1)]
+			char = "((("
 		elif self.id_list[ID] == "Dirt":
 			color = orange
-			char = "::"
+			char = ":::"
 
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (tile_x, tile_y))		

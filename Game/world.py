@@ -110,7 +110,7 @@ class World:
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		self.spawn_player((20,20))
+		self.spawn_player((100,100))
 		self.spawn_baddie((1,3))
 		self.spawn_baddie((5,20))
 		self.spawn_baddie((48,25))
