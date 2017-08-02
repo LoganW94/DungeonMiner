@@ -19,7 +19,7 @@ orange = (255,165,0)
 
 display_width = 960
 display_height = 640
-tile_size = 32
+tile_size = 16
 
 
 class Draw:
@@ -110,10 +110,10 @@ class Draw:
 			char = " +" 
 		elif self.id_list[ID] == "Water":
 			color = colors[randint(0,1)]
-			char = "((("
+			char = "(("
 		elif self.id_list[ID] == "Dirt":
 			color = orange
-			char = ":::"
+			char = "::"
 
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (tile_x, tile_y))		
@@ -126,10 +126,10 @@ class Draw:
 			char = "@"
 		elif self.id_list[ID] == "NPC":
 			color = yellow
-			char = "N" 
+			char = " N" 
 		elif self.id_list[ID] == "Baddie":
 			color = red
-			char = "B"
+			char = " B"
 
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (unit_x, unit_y))		

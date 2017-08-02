@@ -8,7 +8,7 @@ from ingame_menu import Ingame_Menu
 from intro_animation import Intro_Animation
 
 pygame.init()
-font = pygame.font.SysFont(None, 50)
+font = pygame.font.SysFont(None, 25)
 
 class Game:
 	def __init__(self):
@@ -21,7 +21,7 @@ class Game:
 		self.game_menu = Ingame_Menu()
 
 		self.states = {0: "Intro", 1: "Main Menu", 2: "Game", 3: "Game Menu"}
-		self.current_state = 0
+		self.current_state = 2
 
 	def update(self):
 		if self.states[self.current_state] == self.states[0]:

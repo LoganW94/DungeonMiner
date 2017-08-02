@@ -5,7 +5,7 @@ from tile import Tile
 from objects import Object
 import json
 
-size = 200
+size = 100
 
 class World:
 
@@ -36,9 +36,9 @@ class World:
 
 		for x in self.unit_list:
 			if x.ID == "001":
-				self.info_list.append(x.update(user_input))
+				self.info_list.append(x.update(user_input, self.json_map))
 			else:
-				self.info_list.append(x.update(ai_input))
+				self.info_list.append(x.update(ai_input, self.json_map))
 		self.format_world()	
 						
 
@@ -111,7 +111,7 @@ class World:
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		self.spawn_player((100,100))
+		self.spawn_player((20,20))
 		self.spawn_baddie((1,3))
 		self.spawn_baddie((5,20))
 		self.spawn_baddie((48,25))
