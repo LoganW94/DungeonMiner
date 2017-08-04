@@ -18,7 +18,7 @@ class Units:
 		self.can_move = True
 
 	def update(self, input, map):
-		self.check_collide(map, input)
+		#self.check_collide(map, input)
 		if input == "NORTH":
 			self.move_north()
 		elif input == "EAST":

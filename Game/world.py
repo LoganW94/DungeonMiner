@@ -69,21 +69,21 @@ class World:
 		self.size = json_in["Map_size"]
 		print(self.size)
 		mapfile = json_in["Map"]
+		cul = []
 
 		for x in range(self.size):
-			info_row = []
+			row = []
 			for y in range(self.size):
 				location = (x,y)
-				print(location)
-				print(mapfile[x][y])
-				info_cell = []
-				
-				ID = mapfile[x][y]["ID"]
+				item = mapfile[x][y][0]
+				cell = []
+				ID = item["ID"]
 				tile = Tile(location, ID)
-				info_cell.append(tile.tile_info())
-				info_row.append(info_cell)
-			self.json_map.append(info_row)
-		
+				cell.append(tile.tile_info())
+				row.append(cell)
+			cul.append(row)	
+		self.json_map = cul
+		print
 		self.populate()	
 		self.format_world()
 
@@ -128,7 +128,7 @@ class World:
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		self.spawn_player((20,20))
+		self.spawn_player((25,35))
 		self.spawn_baddie((1,3))
 		self.spawn_baddie((5,20))
 		self.spawn_baddie((48,25))
