@@ -67,23 +67,19 @@ class World:
 			infile.close()
 
 		self.size = json_in["Map_size"]
-		print(self.size)
 		mapfile = json_in["Map"]
-		cul = []
+		grid = []
 
 		for x in range(self.size):
 			row = []
 			for y in range(self.size):
-				location = (x,y)
-				item = mapfile[x][y][0]
+				tile = mapfile[x][y][0]
+				print("coords = %s, x = %s, y = %s" % (tile["Location"], x, y) )
 				cell = []
-				ID = item["ID"]
-				tile = Tile(location, ID)
-				cell.append(tile.tile_info())
+				cell.append(tile)
 				row.append(cell)
-			cul.append(row)	
-		self.json_map = cul
-		print
+			grid.append(row)
+		self.json_map = grid
 		self.populate()	
 		self.format_world()
 
@@ -93,7 +89,6 @@ class World:
 		self.world_json["Units"] = self.info_list	
 		self.world_json["Map"] = self.json_map
 		self.world_json["Size"] = self.size
-		
 
 	def save_map(self):
 		filename = "saves/" + self.filename + ".json"

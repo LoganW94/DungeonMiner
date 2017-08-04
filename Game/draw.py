@@ -41,13 +41,12 @@ class Draw:
 			if unit["ID"] == "001":
 				self.cam.update(unit["Location"])
 
-		"should check to see if tile is visible to camera, and if so draws it."
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]
 				location = tile["Location"]
-				tile_x = location[0] * tile_size - self.cam.location[0]
-				tile_y = location[1] * tile_size - self.cam.location[1]
+				tile_x = x * tile_size - self.cam.location[0]
+				tile_y = y * tile_size - self.cam.location[1]
 
 				if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
 					self.draw_tile(tile, tile_x, tile_y)
@@ -104,10 +103,10 @@ class Draw:
 
 		if self.id_list[ID] == "Grass":
 			color = green
-			char = " #"
+			char = "#"
 		elif self.id_list[ID] == "Rock":
 			color = grey
-			char = " +" 
+			char = "+" 
 		elif self.id_list[ID] == "Water":
 			color = colors[randint(0,1)]
 			char = "(("
@@ -126,10 +125,10 @@ class Draw:
 			char = "@"
 		elif self.id_list[ID] == "NPC":
 			color = yellow
-			char = " N" 
+			char = "N" 
 		elif self.id_list[ID] == "Baddie":
 			color = red
-			char = " B"
+			char = "B"
 
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (unit_x, unit_y))		

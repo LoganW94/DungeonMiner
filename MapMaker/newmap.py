@@ -58,9 +58,7 @@ class New_Map:
 
 	def loaded_map(self, json_in, tile_size):
 
-		map_size = json_in["Map_size"]
-
-		self.mapsize = map_size
+		self.mapsize = json_in["Map_size"]
 		map_file = json_in["Map"]
 		self.grid = [] * self.mapsize
 
@@ -72,11 +70,11 @@ class New_Map:
 		default_size = tile_size
 		
 
-		for x in range(map_size):
+		for x in range(self.mapsize):
 			row = []
-			for y in range(map_size):
+			for y in range(self.mapsize):
 				item = map_file[x][y][0]
-
+				print("coords = %s, x = %s, y = %s" % (item["Location"], x, y) )
 				ID = item["ID"]
 				cell = []
 				if ID == "007":
