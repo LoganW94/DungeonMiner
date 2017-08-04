@@ -1,4 +1,4 @@
-from random import randint
+import json
 
 "colors"
 white = (255,255,255)
@@ -13,15 +13,9 @@ orange = (255,165,0)
 
 class Tile:
 
-	def __init__(self, location):
+	def __init__(self, location, ID):
 		self.location = location
-		ids = {
-		0: "004",
-		1: "005",
-		2: "006",
-		3: "007"}
-
-		self.ID = ids[randint(0,3)]
+		self.ID = ID
 		
 
 	def tile_info(self):
@@ -35,4 +29,4 @@ class Tile:
 		test = True
 		if self.ID == "006" or self.ID == "007":
 			test = False
-		return(test)	
+		return(test)		

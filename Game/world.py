@@ -4,6 +4,7 @@ from baddies import Baddie
 from tile import Tile
 from objects import Object
 import json
+from random import randint
 
 size = 100
 
@@ -28,9 +29,7 @@ class World:
 		self.wait_time = 6
 
 		"temp code for testing"
-		self.new_map()
-		self.format_world()
-
+		
 	def update(self, user_input, ai_input):
 		self.info_list = []
 
@@ -44,28 +43,50 @@ class World:
 
 	def new_map(self):
 		self.size = size
+		ids = {
+		0: "004",
+		1: "005",
+		2: "006",
+		3: "007"}
 		for x in range(self.size):
-			row = []
 			info_row = []
 			for y in range(self.size):
-				cell =[]
 				info_cell = []
 				location = (x,y)
-				tile = self.new_tile(location)
-				cell.append(tile)
+				ID = ids[randint(0,3)]
+				tile = Tile(location, ID)
 				info_cell.append(tile.tile_info())
-				row.append(cell)
 				info_row.append(info_cell)
-			self.map_arr.append(row)
 			self.json_map.append(info_row)
 		self.populate()			
 
-	def load_map(self):
-		self.size = size
-		filename = "saves/" + self.filename + ".txt"	
-		with open(filename, 'r') as infile:
-			self.world_json = json.load(infile)
-			infile.close
+	def load_map(self, filename):
+		file = "maps/" + filename + ".json"	
+		with open(file, 'r') as infile:
+			json_in = json.load(infile)
+			infile.close()
+
+		self.size = json_in["Map_size"]
+		print(self.size)
+		mapfile = json_in["Map"]
+
+		for x in range(self.size):
+			info_row = []
+			for y in range(self.size):
+				location = (x,y)
+				print(location)
+				print(mapfile[x][y])
+				info_cell = []
+				
+				ID = mapfile[x][y]["ID"]
+				tile = Tile(location, ID)
+				info_cell.append(tile.tile_info())
+				info_row.append(info_cell)
+			self.json_map.append(info_row)
+		
+		self.populate()	
+		self.format_world()
+
 
 	def format_world(self):
 		self.world_json["Player"] = self.player_info
@@ -75,14 +96,10 @@ class World:
 		
 
 	def save_map(self):
-		filename = "saves/" + self.filename + ".txt"
+		filename = "saves/" + self.filename + ".json"
 		with open(filename, 'w') as outfile:
 			json.dump(self.world_json, outfile)
-		outfile.close
-
-	def new_tile(self, location):
-		tile = Tile(location)
-		return(tile)							
+		outfile.close()							
 
 	def spawn_player(self, location):
 		player = Player(location)

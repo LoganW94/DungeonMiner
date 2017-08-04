@@ -17,11 +17,11 @@ class Game:
 		self.ai = Artificial_Intelligence()
 		self.d = Draw(font)
 		self.intro = Intro_Animation()
-		self.menu_main = Main_Menu()
+		self.menu_main = Main_Menu(self.w)
 		self.game_menu = Ingame_Menu()
 
 		self.states = {0: "Intro", 1: "Main Menu", 2: "Game", 3: "Game Menu"}
-		self.current_state = 2
+		self.current_state = 1
 
 	def update(self):
 		if self.states[self.current_state] == self.states[0]:

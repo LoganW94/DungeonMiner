@@ -2,7 +2,8 @@
 
 
 class Main_Menu:
-	def __init__(self):
+	def __init__(self, world):
+		self.world = world
 		self.load_assets()
 		self.player_name = None
 		self.world_name = None
@@ -12,7 +13,7 @@ class Main_Menu:
 		self.button1 = {"txt": "Load Game", "Selected": False, "function": self.new_game}
 		self.button1_alt = {"txt": "Save Game", "Selected": False, "function": self.save_game}
 		self.button2 = {"txt": "Settings", "Selected": False, "function": self.settings}
-		self.current_state = 0
+		self.current_state = 2
 
 		self.menu_state = {
 		0: self.button0,
@@ -53,6 +54,9 @@ class Main_Menu:
 
 	def new_game(self):
 		"sets up basic info for player and other per game settings"
+		filename = "newmap"
+		self.world.load_map(filename)
+#		self.world.new_map()
 		self.state = 2
 
 	def load_game(self):
