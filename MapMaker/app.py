@@ -104,21 +104,7 @@ class App:
 
 	def load_state(self):
 		self.set_current_state(2)
-		self.mouse_cursor.set_default()
-		state = 2
-
-		file_location_box = button.Text_Box(self.display, self.left_menu_x, self.left_menu_y, self.default_height, 200, self.font, state, self.mouse_cursor, self.handler)
-
-		load_map_button = button.Button(self.display, "Load map", self.left_menu_x, self.left_menu_y + 30, self.default_height, 100, self.font, grey, state, self.load_map)
-
-		main_menu_button = button.Button(self.display, "Main Menu", self.left_menu_x, self.left_menu_y + 300, self.default_height, 150, self.font, grey, state, self.inti_state)
-
-		xplorer_launch = button.Button(self.display, "Launch file explorer", self.left_menu_x, self.left_menu_y - 30, self.default_height, 200, self.font, grey, state)
-
-		state_list =[file_location_box, load_map_button, main_menu_button, xplorer_launch]
-
-		self.button_list = state_list
-		self.set_lists_handler()	
+		self.load_map()	
 
 	def	mapmaker_state(self):
 		self.set_current_state(3)
@@ -160,17 +146,15 @@ class App:
 
 	def load_map(self):
 
-		i = self.button_list[0]
-
-		url = i._txt
-		url = url + ".json"
-		try:
-			self.open_file(url)
-		except:
-			print('no file found @ %s' % url)
+		i = "Newmap"
+		url = "saves/" + i + ".json"
+		with open(url, 'r') as infile:
+				map_file = json.load(infile)
+				infile.close()
+				self.json_in = map_file
 
 		self.map = New_Map(self.display, self.mouse_pointer, self.font)
-		self.map.loaded_map(self.json_in)
+		self.map.loaded_map(self.json_in, 10)
 		self.mapmaker_state()
 		self.tile_arr = self.map.get_grid()
 		self.handler.set_lists(self.obj_list, self.button_list, self.tile_arr)
@@ -178,12 +162,7 @@ class App:
 	def open_file(self,url):		
 		with open(url, "r") as f:
 			self.json_in=f.read().replace('\n', '')
-
-	def print_map(self):
-		try:
-			print(self.json_in)
-		except:
-			print('no map loaded')
+			f.close()
 
 	def save_map_array(self):
 		self.map.final_grid(self.tile_arr)

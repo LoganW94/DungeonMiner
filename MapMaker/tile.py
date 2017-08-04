@@ -4,12 +4,7 @@ class Tile:
 
 	def __init__(self, location, ID):
 		self.location = location
-		ids = {}
-		with open("ID_list.txt", 'r') as infile:
-			ids = json.load(infile)
-			infile.close
-
-		self.ID = ids[ID]
+		self.ID = ID
 		
 
 	def tile_info(self):

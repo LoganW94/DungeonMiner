@@ -22,8 +22,9 @@ class New_Map:
 		self.display = display
 		self.pointer = mouse_pointer
 		self.font = font
-		self.file_name = None
+		self.file_name = "Newmap"
 		self.mapsize = None
+		self.grid = []
 
 	def get_grid(self):
 		return self.grid
@@ -39,22 +40,29 @@ class New_Map:
 		init_x = default_x
 		default_size = tile_size
 
-		row = []
-		self.grid = []
+		self.grid = [] * self.mapsize
+	
 		for x in range(self.mapsize):
+			row = [] * self.mapsize
 			for y in range(self.mapsize):
-				tile = button.Tile(self.display, default_x, default_y, default_size, self.font, white, 3, self.pointer)
-				row.append(tile)
+				cell = []
+				tile = button.Tile(self.display, default_x, default_y, default_size, self.font, blue, 3, self.pointer)
+				cell.append(tile)
+				row.append(cell)
 				default_x += default_size
 
-			self.grid.append(row)
-			row = []	
+			self.grid.append(row)	
 			default_y += default_size
 			default_x = init_x	
+		print(self.grid)	
 
 	def loaded_map(self, json_in, tile_size):
 
-		self.g = GameMap.load(json_in)
+		map_size = json_in["Map_size"]
+
+		self.mapsize = map_size
+		map_file = json_in["Map"]
+		self.grid = [] * self.mapsize
 
 		x = 0
 		y = 0
@@ -63,71 +71,62 @@ class New_Map:
 		init_x = default_x
 		default_size = tile_size
 		
-		row = []
-		self.grid = []
 
-		for x in range(self.g.get_map_size()):
-			for y in range(self.g.get_map_size()):
-				grid_item = self.g.get_grid_item(x,y)
+		for x in range(map_size):
+			row = []
+			for y in range(map_size):
+				item = map_file[x][y][0]
 
-				if(isinstance(grid_item,Terrain)):
-					t_type = grid_item.terrtype
-					print(t_type)
-					if t_type == 'W':
-						color = blue
-					elif t_type == 'P':
-						color = white
-					elif t_type == 'R':
-						color = grey
-					elif t_type == 'T':
-						color = green
-					else:
-						color = red	
-					tile = button.Tile(self.display, default_x, default_y, default_size, self.font, color, 3, self.pointer)
-					row.append(tile)
-					default_x += default_size	
-				self.grid.append(row)
-				row = []	
+				ID = item["ID"]
+				cell = []
+				if ID == "007":
+					color = blue
+				elif ID == "005":
+					color = orange
+				elif ID == "006":
+					color = grey
+				elif ID == "004":
+					color = green
+				else:
+					color = red	
+				tile = button.Tile(self.display, default_x, default_y, default_size, self.font, color, 3, self.pointer)
+				cell.append(tile)
+				row.append(cell)			
+				default_x += default_size	
+				
+			self.grid.append(row)	
 			default_y += default_size
 			default_x = init_x			
 
 
 	def final_grid(self, grid):
-
-		x = 0
-		y = 0
 		to_json = {}
 		to_json["Map_size"] = self.mapsize
 
-		self.grid = grid
 		cul = []
 
-		for i in self.grid:
+		for x in range(self.mapsize):
 			row = []
-			for r in i:
+			for y in range(self.mapsize):
+				t = grid[x][y][0].color
+				location = (x,y)
+				c = []
+				if t == blue:
+					tile = Tile(location, "007")
+				elif t == orange:	
+					tile = Tile(location, "005")
+				elif t == green:
+					tile = Tile(location, "004")
+				elif t == grey:
+					tile = Tile(location, "006")
+				c.append(tile.tile_info())
+				row.append(c)				
 				
-				if r.color == blue:
-					tile = Tile((x,y), "007")
-				elif r.color == orange:	
-					tile = Tile((x,y), "005")
-				elif r.color == green:
-					tile = Tile((x,y), "004")
-				elif r.color == grey:
-					tile = Tile((x,y), "006")
-
-				row.append(tile.tile_info())					
-				x+=1
-			y+=1
-			x=0		
 			cul.append(row)
-		x=0
-		y=0
+		
 		to_json["Map"] = cul
-		print(cul)
 
 		file_name = ("saves/" + self.file_name + ".json")
 		f1=open(file_name, 'w+')
 		json.dump(to_json, f1)
-		f1.close()		
-
-	
+		f1.close()

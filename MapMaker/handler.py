@@ -60,7 +60,7 @@ class Handler:
 
 		for i in self.tile_arr:
 			for x in i:
-				x.update(self.mouse_pos, self._z, self.current_state)			
+				x[0].update(self.mouse_pos, self._z, self.current_state)			
 
 	def draw(self):
 		self.screen.fill(white)
@@ -70,7 +70,7 @@ class Handler:
 
 		for y in self.tile_arr:
 			for x in y:
-				x.draw(self.current_state)
+				x[0].draw(self.current_state)
 
 		for i in self._obj_list:
 			i.draw(self.mouse_pos)			
