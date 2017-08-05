@@ -9,6 +9,7 @@ from intro_animation import Intro_Animation
 
 pygame.init()
 font = pygame.font.SysFont(None, 25)
+lg_font = pygame.font.SysFont(None, 50)
 
 class Game:
 	def __init__(self):
@@ -39,22 +40,26 @@ class Game:
 
 		self.w.update(p_input, ai_input)
 		self.d.draw_world(self.w.return_world())
+		self.current_state = self.w.change_state()
+		self.menu_main.state = self.current_state
 
 	def main_menu(self):
 		p_input = self.u_input.get_input()
 
 		self.menu_main.update(p_input)
-		self.d.draw_main_menu(self.menu_main.return_menu())
+		self.d.draw_main_menu(self.menu_main.return_menu(), lg_font)
 		self.current_state = self.menu_main.change_state()
+		self.w.state = self.current_state
 
 	def intro_animation(self):
 		self.intro.update()
 		self.current_state = self.intro.change_state()
-		self.d.draw_intro(self.intro.return_intro())
+		self.d.draw_intro(self.intro.return_intro(), lg_font)
 
 	def ingame_menu(self):
 		p_input = self.u_input.get_input()
 
 		self.game_menu.update(p_input)
-		self.d.draw_game_menu(self.game_menu.return_menu())
+		self.d.draw_world(self.w.return_world())
+		self.d.draw_game_menu(self.game_menu.return_menu(), font)
 	

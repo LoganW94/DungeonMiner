@@ -45,11 +45,13 @@ class Draw:
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]
 				location = tile["Location"]
+				ID = tile["ID"]
 				tile_x = x * tile_size - self.cam.location[0]
 				tile_y = y * tile_size - self.cam.location[1]
 
 				if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
-					self.draw_tile(tile, tile_x, tile_y)
+					self.draw_tile(ID, tile_x, tile_y)
+						
 
 		for x in range(len(world_json["Units"])):
 			unit = world_json["Units"][x]
@@ -61,7 +63,7 @@ class Draw:
 			if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
 				self.draw_unit(unit, unit_x, unit_y)
 
-	def draw_main_menu(self, menu):
+	def draw_main_menu(self, menu, font):
 		self.display.fill(black)
 		y = 100
 
@@ -71,31 +73,29 @@ class Draw:
 			else:
 				color = white
 			text = menu[x]["txt"]		
-			txt_size = self.font.size(menu[x]["txt"])
-			text = self.font.render(text, True, color)
+			txt_size = font.size(menu[x]["txt"])
+			text = font.render(text, True, color)
 			x = (display_width/2) - (txt_size[0]/2)
 			self.display.blit(text, (x, y))
 			y += 200
 
 
-	def draw_intro(self, intro):
+	def draw_intro(self, intro, font):
 		self.display.fill(black)
 		color = white
-		text = self.font.render(intro, True, color)
-		txt_size = self.font.size(intro)
+		text = font.render(intro, True, color)
+		txt_size = font.size(intro)
 		x = (display_width/2) - (txt_size[0]/2)
 		y = (display_height/2) - (txt_size[1]/2)
 		self.display.blit(text, (x, y))	
 
-	def draw_game_menu(self, menu):
-		self.display.fill(black)		
+	def draw_game_menu(self, menu, font):
+		""
 
 	def draw_HUD(self):
 		"all the stuff that displays on screen during gameplay"		
 
-	def draw_tile(self, tile, tile_x, tile_y):
-		ID = tile["ID"]
-
+	def draw_tile(self, ID, tile_x, tile_y):
 		colors = {
 		0: blue,
 		1: medium_blue,

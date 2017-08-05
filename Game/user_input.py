@@ -15,7 +15,8 @@ class User_Input:
 		"s": "SOUTH", 
 		"a": "WEST", 
 		"d": "EAST",
-		"return": "RETURN"}
+		"return": "RETURN",
+		"escape": "MENU"}
 
 	def get_input(self):
 		self.direction = self.default_state
@@ -25,7 +26,6 @@ class User_Input:
 				pygame.quit()
 				quit()
 			if event.type == pygame.KEYDOWN:
-				"rework so player can set key for each command"
 				key = pygame.key.name(event.key)
 				if key in self.keys:
 					self.direction = self.keys[key]

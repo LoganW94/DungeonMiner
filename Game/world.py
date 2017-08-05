@@ -23,6 +23,7 @@ class World:
 		self.filename = "lastsave"
 		self.json_map = []
 		self.world_json = {}
+		self.state = 2
 
 		self.counter = 0
 		self.wait = False
@@ -32,6 +33,9 @@ class World:
 		
 	def update(self, user_input, ai_input):
 		self.info_list = []
+
+		if user_input == "MENU":
+			self.state = 1
 
 		for x in self.unit_list:
 			if x.ID == "001":
@@ -74,9 +78,10 @@ class World:
 			row = []
 			for y in range(self.size):
 				tile = mapfile[x][y][0]
-				print("coords = %s, x = %s, y = %s" % (tile["Location"], x, y) )
 				cell = []
 				cell.append(tile)
+				char = None
+				cell.append(char)
 				row.append(cell)
 			grid.append(row)
 		self.json_map = grid
@@ -120,12 +125,16 @@ class World:
 
 	def return_world(self):
 		return(self.world_json)
+		
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		self.spawn_player((25,35))
+		self.json_map[25][35].append(self.spawn_player((25,35)))
 		self.spawn_baddie((1,3))
 		self.spawn_baddie((5,20))
 		self.spawn_baddie((48,25))
 		self.spawn_baddie((30,30))
-		self.spawn_npc((25,5))		
+		self.spawn_npc((25,5))
+
+	def change_state(self):
+		return self.state			
