@@ -106,7 +106,7 @@ class New_Map:
 		for x in range(self.mapsize):
 			row = []
 			for y in range(self.mapsize):
-				t = grid[x][y][0].color
+				t = grid[y][x][0].color
 				location = (x,y)
 				c = []
 				if t == blue:
