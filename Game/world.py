@@ -11,40 +11,37 @@ size = 100
 class World:
 
 	def __init__(self):
-		"holds a list of all units instances"
-		self.unit_list = []
-		"just holds the info to be sent to draw"
-		self.info_list = []
 		self.player_info = {}
 		self.map_arr =[]
 		self.num_baddies = 0
 		self.num_npcs = 0
-		self.num_players = 0
 		self.filename = "lastsave"
 		self.json_map = []
 		self.world_json = {}
 		self.state = 2
-
 		self.counter = 0
 		self.wait = False
 		self.wait_time = 6
-
-		"temp code for testing"
 		
 	def update(self, user_input, ai_input):
-		self.info_list = []
+		arr = self.world_json["Map"]
 
 		if user_input == "MENU":
 			self.state = 1
-
-		for x in self.unit_list:
-			if x.ID == "001":
-				self.info_list.append(x.update(user_input, self.json_map))
-			else:
-				self.info_list.append(x.update(ai_input, self.json_map))
-		self.format_world()	
+			
+		for x in range(size):
+			for y in range(size):
+				if len(arr[x][y]) == 3:
+					print(arr[x][y])
+					if arr[x][y][1]["ID"] == "001":
+						info = arr[x][y][2].update(user_input, self.json_map)
+					else:	
+						info = arr[x][y][2].update(ai_input, self.json_map)
+					arr.insert(1, info)
+					
+		self.json_map = arr				
+		self.format_world()		
 						
-
 	def new_map(self):
 		self.size = size
 		ids = {
@@ -62,7 +59,9 @@ class World:
 				info_cell.append(tile.tile_info())
 				info_row.append(info_cell)
 			self.json_map.append(info_row)
-		self.populate()			
+
+		self.populate()
+		self.format_world()				
 
 	def load_map(self, filename):
 		file = "maps/" + filename + ".json"	
@@ -80,18 +79,15 @@ class World:
 				tile = mapfile[x][y][0]
 				cell = []
 				cell.append(tile)
-				char = None
-				cell.append(char)
 				row.append(cell)
 			grid.append(row)
 		self.json_map = grid
-		self.populate()	
+			
+		self.populate()
 		self.format_world()
-
 
 	def format_world(self):
 		self.world_json["Player"] = self.player_info
-		self.world_json["Units"] = self.info_list	
 		self.world_json["Map"] = self.json_map
 		self.world_json["Size"] = self.size
 
@@ -103,38 +99,39 @@ class World:
 
 	def spawn_player(self, location):
 		player = Player(location)
-		self.unit_list.append(player)
-		self.num_players +=1
-		self.player_info = player.unit_info()
-		self.info_list.append(self.player_info)
-		return(player)
+		x = location[0]
+		y = location[1]
+		self.json_map[x][y].append(player.unit_info())
+		self.json_map[x][y].append(player)
+	
 
 	def spawn_baddie(self, location):
 		baddie = Baddie(location)
-		self.info_list.append(baddie.unit_info())
-		self.unit_list.append(baddie)
 		self.num_baddies += 1
-		return(baddie)
+		x = location[0]
+		y = location[1]
+		self.json_map[x][y].append(baddie.unit_info())
+		self.json_map[x][y].append(baddie)
 
 	def spawn_npc(self, location):
 		npc = NPC(location)
-		self.info_list.append(npc.unit_info())
-		self.unit_list.append(npc)
 		self.num_npcs += 1
-		return(npc)		
+		x = location[0]
+		y = location[1]
+		self.json_map[x][y].append(npc.unit_info())
+		self.json_map[x][y].append(npc)		
 
 	def return_world(self):
 		return(self.world_json)
-		
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		self.json_map[25][35].append(self.spawn_player((25,35)))
-		self.spawn_baddie((1,3))
-		self.spawn_baddie((5,20))
-		self.spawn_baddie((48,25))
-		self.spawn_baddie((30,30))
-		self.spawn_npc((25,5))
+		
+		self.spawn_player((25,35))
+		self.spawn_baddie((20,15))
+		self.spawn_baddie((10,20))
+		self.spawn_baddie((30,25))
+		self.spawn_npc((24,30))
 
 	def change_state(self):
 		return self.state			

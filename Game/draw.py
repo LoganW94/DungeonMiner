@@ -21,7 +21,6 @@ display_width = 960
 display_height = 640
 tile_size = 16
 
-
 class Draw:
 
 	def __init__(self, font):
@@ -36,32 +35,24 @@ class Draw:
 	def draw_world(self, world_json):
 		self.display.fill(black)
 		map_arr = world_json["Map"]
-		for x in range(len(world_json["Units"])):
-			unit = world_json["Units"][x]
-			if unit["ID"] == "001":
-				self.cam.update(unit["Location"])
+		self.cam.update( world_json["Player"]["Location"])
 
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):
-				tile = map_arr[x][y][0]
+				tile = map_arr[x][y][0]				
 				location = tile["Location"]
-				ID = tile["ID"]
-				tile_x = x * tile_size - self.cam.location[0]
-				tile_y = y * tile_size - self.cam.location[1]
-
-				if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
-					self.draw_tile(ID, tile_x, tile_y)
-						
-
-		for x in range(len(world_json["Units"])):
-			unit = world_json["Units"][x]
-			location = unit["Location"]
-
-			unit_x = location[0] * tile_size - self.cam.location[0]
-			unit_y = location[1] * tile_size - self.cam.location[1]
-
-			if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
-				self.draw_unit(unit, unit_x, unit_y)
+				if len(map_arr[x][y]) == 3:
+					unit_x = location[0] * tile_size - self.cam.location[0]
+					unit_y = location[1] * tile_size - self.cam.location[1]
+					if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
+						ID = map_arr[x][y][1]["ID"]
+						self.draw_unit(ID, unit_x, unit_y)
+				elif len(map_arr[x][y]) == 1:
+					tile_x = x * tile_size - self.cam.location[0]
+					tile_y = y * tile_size - self.cam.location[1]
+					if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
+						ID = tile["ID"]
+						self.draw_tile(ID, tile_x, tile_y)
 
 	def draw_main_menu(self, menu, font):
 		self.display.fill(black)
@@ -117,8 +108,7 @@ class Draw:
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (tile_x, tile_y))		
 
-	def draw_unit(self, unit, unit_x, unit_y):
-		ID = unit["ID"]
+	def draw_unit(self, ID, unit_x, unit_y):
 
 		if self.id_list[ID] == "Player":
 			color = violet

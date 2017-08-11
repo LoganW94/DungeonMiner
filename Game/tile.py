@@ -17,7 +17,6 @@ class Tile:
 		self.location = location
 		self.ID = ID
 		
-
 	def tile_info(self):
 		tile = {}
 		tile["Location"] = self.location
