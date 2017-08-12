@@ -25,17 +25,33 @@ class World:
 	def update(self, user_input, ai_input):
 		if user_input == "MENU":
 			self.state = 1
-			
+
+		new_map = []	
+		unit_list = []	
+
 		for x in range(self.world_json["Size"]):
+			row = []
 			for y in range(self.world_json["Size"]):
+				cell = []
+				tile = self.json_map[x][y][0]
 				if len(self.json_map[x][y]) == 2:
 					unit = self.json_map[x][y][1]
+					unit_list.append(unit)
 					unit_info = unit.unit_info()
 					if unit_info["ID"] == "001":
 						unit.update(user_input, x, y, self.json_map)
 						self.player_info = unit.unit_info()
 					else:
-						unit.update(ai_input, x, y, self.json_map)					
+						unit.update(ai_input, x, y, self.json_map)	
+				cell.append(tile)
+				row.append(cell)
+			new_map.append(row)
+
+		for x in unit_list:
+			location = x.unit_info()["Location"]
+			new_map[location[0]][location[1]].append(x)
+
+		self.json_map = new_map		
 						
 	def new_map(self):
 		self.size = size

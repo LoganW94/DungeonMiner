@@ -19,7 +19,7 @@ class Units:
 
 	def update(self, input, x, y, map):
 		unit = map[x][y][1]
-		#del map[-1]
+		
 		self.check_collide(input, x, y, map)
 		if input == "NORTH":
 			self.move_north()
@@ -31,7 +31,6 @@ class Units:
 			self.move_west()
 		else:
 			self.idle_state()
-		#map[x][y].append(unit)	
 
 	def set_unit_info(self, state):
 		self.hp = state["HP"]
