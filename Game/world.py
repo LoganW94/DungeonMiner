@@ -23,24 +23,19 @@ class World:
 		self.wait_time = 6
 		
 	def update(self, user_input, ai_input):
-		arr = self.world_json["Map"]
-
 		if user_input == "MENU":
 			self.state = 1
 			
 		for x in range(self.world_json["Size"]):
 			for y in range(self.world_json["Size"]):
-				if len(arr[x][y]) == 3:
-					if arr[x][y][1]["ID"] == "001":
-						info = arr[x][y][2].update(user_input, x, y, arr)
-						self.player_info = info
+				if len(self.json_map[x][y]) == 2:
+					unit = self.json_map[x][y][1]
+					unit_info = unit.unit_info()
+					if unit_info["ID"] == "001":
+						unit.update(user_input, x, y, self.json_map)
+						self.player_info = unit.unit_info()
 					else:
-						info = arr[x][y][2].update(ai_input, x, y, arr)
-					arr.insert(1, info)
-					
-		self.json_map = arr	
-		print(arr[25][35])			
-		self.format_world()		
+						unit.update(ai_input, x, y, self.json_map)					
 						
 	def new_map(self):
 		self.size = size
@@ -102,7 +97,6 @@ class World:
 		x = location[0]
 		y = location[1]
 		self.player_info = player.unit_info()
-		self.json_map[x][y].append(self.player_info)
 		self.json_map[x][y].append(player)
 	
 
@@ -111,7 +105,6 @@ class World:
 		self.num_baddies += 1
 		x = location[0]
 		y = location[1]
-		self.json_map[x][y].append(baddie.unit_info())
 		self.json_map[x][y].append(baddie)
 
 	def spawn_npc(self, location):
@@ -119,7 +112,6 @@ class World:
 		self.num_npcs += 1
 		x = location[0]
 		y = location[1]
-		self.json_map[x][y].append(npc.unit_info())
 		self.json_map[x][y].append(npc)		
 
 	def return_world(self):
@@ -127,7 +119,6 @@ class World:
 
 	def populate(self):
 		"eventually will iterate over map and spawn all baddies, NPCs, items, and the player"
-		
 		self.spawn_player((25,35))
 		self.spawn_baddie((20,15))
 		self.spawn_baddie((10,20))

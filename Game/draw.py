@@ -42,11 +42,12 @@ class Draw:
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]				
 				location = tile["Location"]
-				if len(map_arr[x][y]) == 3:
+				if len(map_arr[x][y]) == 2:
+					unit = map_arr[x][y][1].unit_info()
 					unit_x = location[0] * tile_size - self.cam.location[0]
 					unit_y = location[1] * tile_size - self.cam.location[1]
 					if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
-						ID = map_arr[x][y][1]["ID"]
+						ID = unit["ID"]
 						self.draw_unit(ID, unit_x, unit_y)
 				elif len(map_arr[x][y]) == 1:
 					tile_x = x * tile_size - self.cam.location[0]
