@@ -55,7 +55,6 @@ class Main_Menu:
 		"sets up basic info for player and other per game settings"
 		filename = "newmap"
 		self.world.load_map(filename)
-#		self.world.new_map()
 		self.state = 2
 
 	def load_game(self):

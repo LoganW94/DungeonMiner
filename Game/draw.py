@@ -35,7 +35,8 @@ class Draw:
 	def draw_world(self, world_json):
 		self.display.fill(black)
 		map_arr = world_json["Map"]
-		self.cam.update( world_json["Player"]["Location"])
+		player = world_json["Player"]
+		self.cam.update(world_json["Player"]["Location"])
 
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):

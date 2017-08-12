@@ -17,8 +17,8 @@ class Units:
 		self.location = location
 		self.can_move = True
 
-	def update(self, input, map):
-		self.check_collide(map, input)
+	def update(self, input, x, y, map):
+		self.check_collide(input, x, y, map)
 		if input == "NORTH":
 			self.move_north()
 		elif input == "EAST":
@@ -56,12 +56,10 @@ class Units:
 		state["LVL"] = self.lvl = 1
 		state["status"] = self.status
 #		state[""] = self.
-#		state[""] = self.
-#		state[""] = self.
 		return(state)
 
-	def check_collide(self, map, input):
-		current_tile = map[self.location[0]][self.location[1]][0]
+	def check_collide(self, input, x, y, map):
+		current_tile = map[x][y][0]
 		current_location = current_tile["Location"]
 		if input == "NORTH":
 			next_tile = (current_location[0], current_location[1] - 1)

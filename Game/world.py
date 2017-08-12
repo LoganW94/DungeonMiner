@@ -6,7 +6,6 @@ from objects import Object
 import json
 from random import randint
 
-size = 100
 
 class World:
 
@@ -29,17 +28,18 @@ class World:
 		if user_input == "MENU":
 			self.state = 1
 			
-		for x in range(size):
-			for y in range(size):
+		for x in range(self.world_json["Size"]):
+			for y in range(self.world_json["Size"]):
 				if len(arr[x][y]) == 3:
-					print(arr[x][y])
 					if arr[x][y][1]["ID"] == "001":
-						info = arr[x][y][2].update(user_input, self.json_map)
-					else:	
-						info = arr[x][y][2].update(ai_input, self.json_map)
+						info = arr[x][y][2].update(user_input, x, y, arr)
+						self.player_info = info
+					else:
+						info = arr[x][y][2].update(ai_input, x, y, arr)
 					arr.insert(1, info)
 					
-		self.json_map = arr				
+		self.json_map = arr	
+		print(arr[25][35])			
 		self.format_world()		
 						
 	def new_map(self):
@@ -101,7 +101,8 @@ class World:
 		player = Player(location)
 		x = location[0]
 		y = location[1]
-		self.json_map[x][y].append(player.unit_info())
+		self.player_info = player.unit_info()
+		self.json_map[x][y].append(self.player_info)
 		self.json_map[x][y].append(player)
 	
 
