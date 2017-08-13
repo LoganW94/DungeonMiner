@@ -12,6 +12,7 @@ class Units:
 		self.sp = 0
 		self.status = "Passive"	
 		self.lvl = 1
+		self.type = "Unit"
 		self.default_state = "IDLE"
 		self.current_state = self.default_state
 		self.location = location
@@ -42,6 +43,7 @@ class Units:
 		self.current_state = state["Current State"]
 		self.status = "Passive"	
 		self.lvl = 1
+		self.type = "Unit"
 
 	def unit_info(self):
 		state = {}
@@ -55,24 +57,32 @@ class Units:
 		state["Current State"] = self.current_state
 		state["LVL"] = self.lvl = 1
 		state["status"] = self.status
+		state["Type"] = self.type
 #		state[""] = self.
 		return(state)
 
 	def check_collide(self, input, x, y, map):
 		current_tile = map[x][y][0]
-		current_location = current_tile["Location"]
+		current_location = current_tile.tile_info()["Location"]
 		if input == "NORTH":
-			next_tile = (current_location[0], current_location[1] - 1)
-			self.can_move = map[next_tile[0]][next_tile[1]][0]["Is_passable"]
+			#next_tile = (current_location[0], current_location[1] - 1)
+			
+			self.check_tile(next_tile)
+#			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
 		elif input == "EAST":
 			next_tile = (current_location[0] + 1, current_location[1])
-			self.can_move = map[next_tile[0]][next_tile[1]][0]["Is_passable"]
+			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
 		elif input == "SOUTH":
 			next_tile = (current_location[0], current_location[1] + 1)
-			self.can_move = map[next_tile[0]][next_tile[1]][0]["Is_passable"]
+			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
 		elif input == "WEST":
 			next_tile = (current_location[0] - 1, current_location[1])
-			self.can_move = map[next_tile[0]][next_tile[1]][0]["Is_passable"]		
+			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
+
+	def check_tile(self, next_tile):
+		if len(next_tile) == 2:
+
+		else:				
 
 	def move_north(self):
 		if self.can_move == True:

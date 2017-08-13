@@ -16,12 +16,14 @@ class Tile:
 	def __init__(self, location, ID):
 		self.location = location
 		self.ID = ID
+		self.type = "Tile"
 		
 	def tile_info(self):
 		tile = {}
 		tile["Location"] = self.location
 		tile["ID"] = self.ID
 		tile["Is_passable"] = self.is_passable()
+		tile["Type"] = self.type
 		return(tile)
 
 	def is_passable(self):

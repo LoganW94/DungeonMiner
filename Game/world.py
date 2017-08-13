@@ -1,8 +1,9 @@
 from npc import NPC
 from player import Player
 from baddies import Baddie
+from units import Units
 from tile import Tile
-from objects import Object
+from objects import *
 import json
 from random import randint
 
@@ -35,14 +36,15 @@ class World:
 				cell = []
 				tile = self.json_map[x][y][0]
 				if len(self.json_map[x][y]) == 2:
-					unit = self.json_map[x][y][1]
-					unit_list.append(unit)
-					unit_info = unit.unit_info()
-					if unit_info["ID"] == "001":
-						unit.update(user_input, x, y, self.json_map)
-						self.player_info = unit.unit_info()
-					else:
-						unit.update(ai_input, x, y, self.json_map)	
+					if isinstance(self.json_map[x][y][1], Units):
+						unit = self.json_map[x][y][1]
+						unit_list.append(unit)
+						unit_info = unit.unit_info()
+						if unit_info["ID"] == "001":
+							unit.update(user_input, x, y, self.json_map)
+							self.player_info = unit.unit_info()
+						else:
+							unit.update(ai_input, x, y, self.json_map)	
 				cell.append(tile)
 				row.append(cell)
 			new_map.append(row)
@@ -51,7 +53,8 @@ class World:
 			location = x.unit_info()["Location"]
 			new_map[location[0]][location[1]].append(x)
 
-		self.json_map = new_map		
+		self.json_map = new_map	
+		self.format_world()	
 						
 	def new_map(self):
 		self.size = size
@@ -88,8 +91,9 @@ class World:
 			row = []
 			for y in range(self.size):
 				tile = mapfile[x][y][0]
+				new_tile = Tile(tile["Location"], tile["ID"])
 				cell = []
-				cell.append(tile)
+				cell.append(new_tile)
 				row.append(cell)
 			grid.append(row)
 		self.json_map = grid
@@ -113,8 +117,7 @@ class World:
 		x = location[0]
 		y = location[1]
 		self.player_info = player.unit_info()
-		self.json_map[x][y].append(player)
-	
+		self.json_map[x][y].append(player)	
 
 	def spawn_baddie(self, location):
 		baddie = Baddie(location)
@@ -128,7 +131,13 @@ class World:
 		self.num_npcs += 1
 		x = location[0]
 		y = location[1]
-		self.json_map[x][y].append(npc)		
+		self.json_map[x][y].append(npc)
+
+	def spawn_ladder(self, location):
+		ladder = Ladder(location)
+		x = location[0]
+		y = location[1]
+		self.json_map[x][y].append(ladder)			
 
 	def return_world(self):
 		return(self.world_json)
@@ -140,6 +149,7 @@ class World:
 		self.spawn_baddie((10,20))
 		self.spawn_baddie((30,25))
 		self.spawn_npc((24,30))
+		self.spawn_ladder((25,37))
 
 	def change_state(self):
 		return self.state			

@@ -3,6 +3,9 @@ import pygame
 from camera import Camera
 import json
 from random import randint
+from units import Units
+from objects import *
+from tile import Tile
 
 "colors"
 white = (255,255,255)
@@ -41,19 +44,27 @@ class Draw:
 		for x in range(world_json["Size"]):
 			for y in range(world_json["Size"]):
 				tile = map_arr[x][y][0]				
-				location = tile["Location"]
+				location = tile.tile_info()["Location"]
 				if len(map_arr[x][y]) == 2:
-					unit = map_arr[x][y][1].unit_info()
-					unit_x = location[0] * tile_size - self.cam.location[0]
-					unit_y = location[1] * tile_size - self.cam.location[1]
-					if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
-						ID = unit["ID"]
-						self.draw_unit(ID, unit_x, unit_y)
-				elif len(map_arr[x][y]) == 1:
+					if isinstance(map_arr[x][y][1], Units):
+						unit = map_arr[x][y][1].unit_info()
+						unit_x = location[0] * tile_size - self.cam.location[0]
+						unit_y = location[1] * tile_size - self.cam.location[1]
+						if unit_x >= 0 and unit_y >= 0 and unit_x <= display_width - tile_size and unit_y <= display_height - tile_size:
+							ID = unit["ID"]
+							self.draw_unit(ID, unit_x, unit_y)
+					elif isinstance(map_arr[x][y][1], Object):
+						item = map_arr[x][y][1]
+						item_x = location[0] * tile_size - self.cam.location[0]
+						item_y = location[1] * tile_size - self.cam.location[1]
+						if item_x >= 0 and item_y >= 0 and item_x <= display_width - tile_size and item_y <= display_height - tile_size:
+							ID = item["ID"]
+							self.draw_item(ID, item_x, item_y)
+				elif isinstance(map_arr[x][y][0], Tile):
 					tile_x = x * tile_size - self.cam.location[0]
 					tile_y = y * tile_size - self.cam.location[1]
 					if tile_x >= -tile_size and tile_y >= -tile_size and tile_x <= display_width + tile_size and tile_y <= display_height + tile_size: 
-						ID = tile["ID"]
+						ID = tile.tile_info()["ID"]
 						self.draw_tile(ID, tile_x, tile_y)
 
 	def draw_main_menu(self, menu, font):
@@ -89,6 +100,7 @@ class Draw:
 		"all the stuff that displays on screen during gameplay"		
 
 	def draw_tile(self, ID, tile_x, tile_y):
+		print("draw")
 		colors = {
 		0: blue,
 		1: medium_blue,
@@ -124,3 +136,11 @@ class Draw:
 
 		text = self.font.render(char, True, color)
 		self.display.blit(text, (unit_x, unit_y))		
+
+	def draw_item(self, ID, item_x, item_y):
+		if self.id_list[ID] == "Ladder":
+			color = orange
+			char = "H" 
+
+		text = self.ont.render(char, True, color)
+		self.display.blit(text, (item_x, item_y))	

@@ -18,4 +18,9 @@ class Artificial_Intelligence:
 		key = 'c'
 
 		self.direction = self.keys[key]
-		return(self.direction)		
+		return(self.direction)
+
+
+	"pathfinder"
+	
+	"finite state machine or game tree"			
