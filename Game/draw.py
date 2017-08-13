@@ -23,6 +23,9 @@ orange = (255,165,0)
 display_width = 960
 display_height = 640
 tile_size = 16
+"to impliment"
+tile_height = 16
+tile_width = 14 #may need tweeked
 
 class Draw:
 
@@ -100,7 +103,6 @@ class Draw:
 		"all the stuff that displays on screen during gameplay"		
 
 	def draw_tile(self, ID, tile_x, tile_y):
-		print("draw")
 		colors = {
 		0: blue,
 		1: medium_blue,
@@ -108,7 +110,7 @@ class Draw:
 
 		if self.id_list[ID] == "Grass":
 			color = green
-			char = "#"
+			char = u'\u0393'		
 		elif self.id_list[ID] == "Rock":
 			color = grey
 			char = "+" 
@@ -143,4 +145,9 @@ class Draw:
 			char = "H" 
 
 		text = self.ont.render(char, True, color)
-		self.display.blit(text, (item_x, item_y))	
+		self.display.blit(text, (item_x, item_y))
+
+	def draw_cell(self, color, x, y):
+		char = "/"
+		text = self.ont.render(char, True, color)
+		self.display.blit(text, (x, y))	

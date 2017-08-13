@@ -65,24 +65,24 @@ class Units:
 		current_tile = map[x][y][0]
 		current_location = current_tile.tile_info()["Location"]
 		if input == "NORTH":
-			#next_tile = (current_location[0], current_location[1] - 1)
-			
+			next_tile =  map[current_location[0]][current_location[1] - 1]
 			self.check_tile(next_tile)
-#			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
 		elif input == "EAST":
-			next_tile = (current_location[0] + 1, current_location[1])
-			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
+			next_tile = map[current_location[0] + 1][current_location[1]]
+			self.check_tile(next_tile)
 		elif input == "SOUTH":
-			next_tile = (current_location[0], current_location[1] + 1)
-			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
+			next_tile = map[current_location[0]][current_location[1] + 1]
+			self.check_tile(next_tile)
 		elif input == "WEST":
-			next_tile = (current_location[0] - 1, current_location[1])
-			self.can_move = map[next_tile[0]][next_tile[1]][0].tile_info()["Is_passable"]
+			next_tile = map[current_location[0] - 1][current_location[1]]
+			self.check_tile(next_tile)
 
 	def check_tile(self, next_tile):
 		if len(next_tile) == 2:
-
+			if isinstance(next_tile[1], Units):
+				self.can_move = False
 		else:				
+			self.can_move = next_tile[0].tile_info()["Is_passable"]
 
 	def move_north(self):
 		if self.can_move == True:
