@@ -12,6 +12,10 @@ font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 20)
 lg_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 50)
 p_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 16)
 
+"""font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 20)
+lg_font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 50)
+p_font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 16)"""
+
 class Game:
 	def __init__(self):
 		self.w = World()

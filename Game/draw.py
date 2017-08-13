@@ -111,7 +111,7 @@ class Draw:
 
 		if self.id_list[ID] == "Grass":
 			color = green
-			char = "#"	
+			char = "; '"
 		elif self.id_list[ID] == "Rock":
 			color = grey
 			char = "+" 
