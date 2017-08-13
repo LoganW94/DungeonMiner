@@ -35,7 +35,9 @@ class World:
 			for y in range(self.world_json["Size"]):
 				cell = []
 				tile = self.json_map[x][y][0]
+				cell.append(tile)
 				if len(self.json_map[x][y]) == 2:
+
 					if isinstance(self.json_map[x][y][1], Units):
 						unit = self.json_map[x][y][1]
 						unit_list.append(unit)
@@ -44,8 +46,12 @@ class World:
 							unit.update(user_input, x, y, self.json_map)
 							self.player_info = unit.unit_info()
 						else:
-							unit.update(ai_input, x, y, self.json_map)	
-				cell.append(tile)
+							unit.update(ai_input, x, y, self.json_map)
+
+					elif isinstance(self.json_map[x][y][1], Object):
+						item = self.json_map[x][y][1]
+						cell.append(item)
+
 				row.append(cell)
 			new_map.append(row)
 

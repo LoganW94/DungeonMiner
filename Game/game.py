@@ -8,21 +8,22 @@ from ingame_menu import Ingame_Menu
 from intro_animation import Intro_Animation
 
 pygame.init()
-font = pygame.font.SysFont(None, 25)
-lg_font = pygame.font.SysFont(None, 50)
+font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 20)
+lg_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 50)
+p_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 16)
 
 class Game:
 	def __init__(self):
 		self.w = World()
 		self.u_input = User_Input()
 		self.ai = Artificial_Intelligence()
-		self.d = Draw(font)
+		self.d = Draw(font, p_font)
 		self.intro = Intro_Animation()
 		self.menu_main = Main_Menu(self.w)
 		self.game_menu = Ingame_Menu()
 
 		self.states = {0: "Intro", 1: "Main Menu", 2: "Game", 3: "Game Menu"}
-		self.current_state = 1
+		self.current_state = 0
 
 	def update(self):
 		if self.states[self.current_state] == self.states[0]:

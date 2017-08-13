@@ -29,10 +29,11 @@ tile_width = 14 #may need tweeked
 
 class Draw:
 
-	def __init__(self, font):
+	def __init__(self, font, p_font):
 		self.display = Screen.new(display_width, display_height, red, "Dungeon Miner")
 		self.cam = Camera(display_height, display_width, tile_size)
 		self.font = font
+		self.p_font = p_font
 
 		with open("ID_list.txt", 'r') as infile:
 			self.id_list = json.load(infile)
@@ -61,7 +62,7 @@ class Draw:
 						item_x = location[0] * tile_size - self.cam.location[0]
 						item_y = location[1] * tile_size - self.cam.location[1]
 						if item_x >= 0 and item_y >= 0 and item_x <= display_width - tile_size and item_y <= display_height - tile_size:
-							ID = item["ID"]
+							ID = item.item_info()["ID"]
 							self.draw_item(ID, item_x, item_y)
 				elif isinstance(map_arr[x][y][0], Tile):
 					tile_x = x * tile_size - self.cam.location[0]
@@ -110,7 +111,7 @@ class Draw:
 
 		if self.id_list[ID] == "Grass":
 			color = green
-			char = u'\u0393'		
+			char = "#"	
 		elif self.id_list[ID] == "Rock":
 			color = grey
 			char = "+" 
@@ -129,25 +130,31 @@ class Draw:
 		if self.id_list[ID] == "Player":
 			color = violet
 			char = "@"
+			text = self.p_font.render(char, True, color)
+			self.display.blit(text, (unit_x - 2, unit_y))
 		elif self.id_list[ID] == "NPC":
 			color = yellow
-			char = "N" 
+			char = "N"
+			text = self.font.render(char, True, color)
+			self.display.blit(text, (unit_x, unit_y)) 
 		elif self.id_list[ID] == "Baddie":
 			color = red
 			char = "B"
-
-		text = self.font.render(char, True, color)
-		self.display.blit(text, (unit_x, unit_y))		
+			text = self.font.render(char, True, color)
+			self.display.blit(text, (unit_x, unit_y))
+		
+				
 
 	def draw_item(self, ID, item_x, item_y):
+		
 		if self.id_list[ID] == "Ladder":
 			color = orange
 			char = "H" 
 
-		text = self.ont.render(char, True, color)
+		text = self.font.render(char, True, color)
 		self.display.blit(text, (item_x, item_y))
 
 	def draw_cell(self, color, x, y):
-		char = "/"
-		text = self.ont.render(char, True, color)
+		char = u'\u2533'
+		text = self.font.render(char, True, color)
 		self.display.blit(text, (x, y))	
