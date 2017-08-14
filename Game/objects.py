@@ -18,4 +18,12 @@ class Ladder(Object):
 		self.ID = "008"
 		Object.__init__(self, location, self.ID)
 			
+class Gold(Object):
+	def __init__(self, location):
+		self.ID = "009"
+		Object.__init__(self, location, self.ID)
 
+class Sword(Object):
+	def __init__(self, location):
+		self.ID = "010"
+		Object.__init__(self, location, self.ID)		

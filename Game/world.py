@@ -1,9 +1,10 @@
 from npc import NPC
 from player import Player
-from baddies import Baddie
+from baddies import *
 from units import Units
 from tile import Tile
 from objects import *
+from artificial_intelligence import Artificial_Intelligence
 import json
 from random import randint
 
@@ -22,8 +23,9 @@ class World:
 		self.counter = 0
 		self.wait = False
 		self.wait_time = 6
+		self.ai = Artificial_Intelligence()
 		
-	def update(self, user_input, ai_input):
+	def update(self, user_input):
 		if user_input == "MENU":
 			self.state = 1
 
@@ -46,7 +48,7 @@ class World:
 							unit.update(user_input, x, y, self.json_map)
 							self.player_info = unit.unit_info()
 						else:
-							unit.update(ai_input, x, y, self.json_map)
+							unit.update(self.ai.get_input(unit, self.json_map), x, y, self.json_map)
 
 					elif isinstance(self.json_map[x][y][1], Object):
 						item = self.json_map[x][y][1]

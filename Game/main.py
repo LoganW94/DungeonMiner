@@ -4,7 +4,7 @@ from game import Game
 pygame.init()
 
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 25
 
 g = Game()
 

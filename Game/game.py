@@ -12,22 +12,19 @@ font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 20)
 lg_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 50)
 p_font = pygame.font.Font("C:\Windows\Fonts\Candara.ttf", 16)
 
-"""font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 20)
-lg_font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 50)
-p_font = pygame.font.Font("C:\Windows\Fonts\Tahoma.ttf", 16)"""
 
 class Game:
 	def __init__(self):
 		self.w = World()
 		self.u_input = User_Input()
-		self.ai = Artificial_Intelligence()
+		
 		self.d = Draw(font, p_font)
 		self.intro = Intro_Animation()
 		self.menu_main = Main_Menu(self.w)
 		self.game_menu = Ingame_Menu()
 
 		self.states = {0: "Intro", 1: "Main Menu", 2: "Game", 3: "Game Menu"}
-		self.current_state = 0
+		self.current_state = 1
 
 	def update(self):
 		if self.states[self.current_state] == self.states[0]:
@@ -40,10 +37,9 @@ class Game:
 			self.ingame_menu()
 
 	def run_game(self):
-		ai_input = self.ai.get_input()
 		p_input = self.u_input.get_input()
 
-		self.w.update(p_input, ai_input)
+		self.w.update(p_input)
 		self.d.draw_world(self.w.return_world())
 		self.current_state = self.w.change_state()
 		self.menu_main.state = self.current_state
