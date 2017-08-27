@@ -36,7 +36,7 @@ class Draw:
 		self.p_font = p_font
 
 		with open("ID_list.txt", 'r') as infile:
-			self.id_list = json.load(infile)
+			self.id_list = json.load(infile) 
 			infile.close
 
 	def draw_world(self, world_json):

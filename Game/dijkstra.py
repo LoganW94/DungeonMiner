@@ -11,73 +11,49 @@ class Path:
 		self.new_tiles = []
 		self.tile_number = 0
 		self.max_distance = 20
-		path_north = []
-		path_east = []
-		path_south = []
-		path_west = []
-		self.paths = {
-		0: path_north,
-		1: path_east,
-		2: path_south,
-		3: path_west}
 
 		next_tile = self.find_path(start, map)
 		return(temp_next_tile)
 
 	def	find_path(self, start, map):
-		location = start
+		start_tile = map[start[0]][start[1]][0]
+
 		distance = 0
+		while distance < max_distance:
+			if len(self.new_tiles) == 0:
+				distance += 1
+				tiles = find_neighbors(start, map)
+				self.checked_tiles.append(start_tile)
+				for x in tiles:
+					self.new_tiles.append(x)
+			else:
+				for x in self.new_tiles:
+					distance += 1
+					tiles = find_neighbors(x.tile_info()["Location"], map)
+					for y in tiles:
+						y.set_info("Distance", distance)
+						y.set_info("")ssxmbbmbscbssx
+						if y not in self.checked_tiles:
+							self.checked_tiles.append(y)
+						
 
-		while distance < self.max_distance:
-			self.new_tiles = []
-			distance += 1
-			path_num = 0
-			for x in self.find_neighbors(location):
-				if len(self.checked_tiles) > 0:
-					for y in self.checked_tiles:
-						if x[0] != y["Location"][0] and x[1] != y["Location"][1]:
-							self.new_tiles.append(self.new_tile(x, map, distance))
-							self.tile_number += 1
-				else:
-					new_tile = self.new_tile(x, map, distance)
-					self.new_tiles.append(new_tile)
-					self.paths[path_num].append(new_tile)
-					self.tile_number += 1
+		
 
-			for x in self.new_tiles:
-				self.checked_tiles.append(x)
-
-			print(self.checked_tiles)
-
-	def find_neighbors(self, location):
+	def find_neighbors(self, location, map):
 		x = location[0]
 		y = location[1]
 
 		north = (x, y-1)
+		north = map[north[0]][north[1]][0]
 		east = (x+1, y)
+		east = map[east[0]][east[1]][0]
 		south = (x, y+1)
+		south = map[south[0]][south[1]][0]
 		west = (x-1, y)
+		west = map[west[0]][west[1]][0]
 
 		return(north, east, south, west)
 
-	def new_tile(self, location, map, distance):	
-		tile = {}
-		tile["Location"] = location
-		tile["Number"] = self.tile_number
-		tile["Distance"] = distance
-		tile["Value"] =self.determine_value(map, location)
 
-		return(tile)
-
-	def determine_value(self, map, location):	
-		value = 0
-		unit = map[location[0]][location[1]][1]
-
-		if isinstance(unit, Units)
-			value -= 2
-			if isinstance(unit, Player)
-				value -= 2
-
-		return(value)
 
 	

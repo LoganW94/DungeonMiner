@@ -22,10 +22,6 @@ class Artificial_Intelligence:
 		self.direction = self.default_state
 		start = unit["Location"]
 
-		next_tile = Path(start, map)
-		x = next_tile[0]
-		y = next_tile[1]
-
 		if x > start[0]:
 			key = "d"
 		elif x < start[0]:
@@ -42,4 +38,20 @@ class Artificial_Intelligence:
 
 	
 	def fsm(self, unit):
-		"finite state machine or game tree"			
+		"finite state machine or game tree"	
+
+		"sudo code"
+		idle_state()
+
+
+	def idle_state(self):
+		""
+		next_tile = Path(start, map)
+		x = next_tile[0]
+		y = next_tile[1]
+
+	def attack_state(self):
+		""
+
+	def move_state(self):
+		""		
