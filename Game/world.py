@@ -48,7 +48,7 @@ class World:
 							unit.update(user_input, x, y, self.json_map)
 							self.player_info = unit.unit_info()
 						else:
-							unit.update(self.ai.get_input(unit, self.json_map), x, y, self.json_map)
+							unit.update(self.ai.get_input(unit, self.json_map, self.world_json["Size"]), x, y, self.json_map)
 
 					elif isinstance(self.json_map[x][y][1], Object):
 						item = self.json_map[x][y][1]

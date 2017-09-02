@@ -4,7 +4,7 @@ from baddies import *
 from units import Units
 from tile import Tile
 from objects import *
-from dijkstra import Path
+from pathfinder import Path
 
 class Artificial_Intelligence:
 
@@ -18,17 +18,19 @@ class Artificial_Intelligence:
 		"d": "EAST",
 		"c": self.default_state}
 
-	def get_input(self, unit, map):
+	def get_input(self, unit, map, map_size):
 		self.direction = self.default_state
-		start = unit["Location"]
+		start = unit.unit_info()["Location"]
+		next_tile = Path().find_path(start, map, map_size)
+		#next_tile = start
 
-		if x > start[0]:
+		if next_tile[0] > start[0]:
 			key = "d"
-		elif x < start[0]:
+		elif next_tile[0] < start[0]:
 			key = "a"	
-		elif y > start[1]:
+		elif next_tile[1] > start[1]:
 			key = "s"
-		elif y < start[1]:
+		elif next_tile[1] < start[1]:
 			key = "w"
 		else:
 			key = "c"			

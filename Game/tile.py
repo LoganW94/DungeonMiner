@@ -18,6 +18,9 @@ class Tile:
 		self.ID = ID
 		self.type = "Tile"
 		self.tile = {}
+		self.tile_number = 0
+		self.distance = 0
+		self.predeccesor = None
 		
 	def tile_info(self):
 		self.tile["Location"] = self.location
@@ -25,9 +28,9 @@ class Tile:
 		self.tile["Is_passable"] = self.is_passable()
 		self.tile["Type"] = self.type
 		self.tile["Number"] = self.tile_number
-		self.tile["Distance"] = distance
-		self.tile["Visited"] = false
-		self.tile["Predeccesor"] = predeccesor
+		self.tile["Distance"] = self.distance
+		self.tile["Visited"] = False
+		self.tile["Predeccesor"] = self.predeccesor
 		return(self.tile)
 
 	def set_info(self, key, value):
