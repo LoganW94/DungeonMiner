@@ -24,13 +24,13 @@ class Artificial_Intelligence:
 		next_tile = Path().find_path(start, map, map_size)
 		#next_tile = start
 
-		if next_tile[0] > start[0]:
+		if next_tile.tile_info()["Location"][0] > start[0]:
 			key = "d"
-		elif next_tile[0] < start[0]:
+		elif next_tile.tile_info()["Location"][0] < start[0]:
 			key = "a"	
-		elif next_tile[1] > start[1]:
+		elif next_tile.tile_info()["Location"][1] > start[1]:
 			key = "s"
-		elif next_tile[1] < start[1]:
+		elif next_tile.tile_info()["Location"][1] < start[1]:
 			key = "w"
 		else:
 			key = "c"			

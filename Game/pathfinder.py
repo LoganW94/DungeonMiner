@@ -7,27 +7,32 @@ from objects import *
 
 class Path:
 	def __init__(self):
-		self.max_distance = 10
+		self.max_distance = 20
+		self.target = None
+		self.distance = 0
+		self.tile_number = 0
 
 	def	find_path(self, start, map, map_size):
 		start_tile = map[start[0]][start[1]][0]
-		distance = 1
-		tile_number = 0
-		checked_tiles = []
-		unchecked_tiles = []
-		target = None
+		checked_tiles = self.build_list(start, map, map_size, start_tile)
+	
+		return self.shortest_path(checked_tiles)
 
+	def build_list(self, start, map, map_size, start_tile):
+		unchecked_tiles = []
+		checked_tiles = []				
 		tiles = self.find_neighbors(start, map, map_size)
 		checked_tiles.append(start_tile)
+		
 		for x in tiles:
-			tile_number +=1
-			self.set_tile_info(x, tile_number, distance, start)
+			self.tile_number +=1
+			self.set_tile_info(x, self.tile_number, self.distance, start)
 			unchecked_tiles.append(x)
 		
 		while True:
 			new_tiles = []
-			distance += 1
-			if distance == self.max_distance:
+			self.distance += 1
+			if self.distance == self.max_distance:
 				break
 			for x in unchecked_tiles:	
 				tiles = self.find_neighbors(x.tile_info()["Location"], map, map_size)
@@ -35,46 +40,69 @@ class Path:
 				unchecked_tiles.remove(x)
 				for y in tiles:
 					if y not in checked_tiles and y not in unchecked_tiles:
-						self.set_tile_info(y, tile_number, distance, x)
-						tile_number +=1
-						if y.tile_info()["Is_passable"] == True and :
+						self.set_tile_info(y, self.tile_number, self.distance, x)
+						self.tile_number +=1
+						if y.tile_info()["Is_passable"] == True:
 							new_tiles.append(y)
-		
+						tile_loc = y.tile_info()["Location"]	
+						if len(map[tile_loc[0]][tile_loc[1]]) == 2:
+							unit = map[tile_loc[0]][tile_loc[1]][1]	
+							if isinstance(unit, Player):
+								self.target = y
 		for t in checked_tiles:
 			self.find_value(t, map)
+			if t.tile_info()["Value"] > 5:
+				checked_tiles.remove(t)
+		return checked_tiles		
 
-		"start at the bottom and form all possible paths and return the one with the least total value"
-		"if there is a target find path to target with least value"
+	def shortest_path(self, checked_tiles, target = None):
+		path = []
+		reordered_list = []
 
-		if target == None:
-			"find path of least resistance"
-		else:
-			"find easiest path to target"							
+		while True:
+			lowest_cost = None
+			for x in checked_tiles:
+				if lowest_cost == None:
+					lowest_cost = x
+					reordered_list.append(lowest_cost)
+				elif x.tile_info()["Value"] > lowest_cost.tile_info()["Value"]:
+						lowest_cost = x
+						reordered_list.append(lowest_cost)
+				elif x.tile_info()["Value"] < lowest_cost.tile_info()["Value"]:
+					reordered_list.insert(0,x)		
+				
+				checked_tiles.remove(x)	
 
-		"return next tile"
-		temp_next_tile = map[start[0]][start[1]][0].tile_info()["Location"]
-		return temp_next_tile
+			new_path = []	
+			for x in reordered_list:
+				root = x.tile_info()["Predeccesor"]
+				while root != None:
+					if isinstance(root, Tile):
+						root = root.tile_info()["Predeccesor"]
+						new_path.append(root)
+					if root == self.target:
+						break
+										
+			if len(checked_tiles) == 0:
+				break
+
+		return path
 
 	def find_value(self, tile, map):
-		unit_val = 5
-		grass_val = 2
-		dirt_val = 1
-		obj_val = 5
+		"move this to constructor for Tile"
+		
 		tile_info = tile.tile_info()
 		tile_location = tile_info["Location"]
 		value = 0
 
-		if isinstance(map[tile_location[0]][tile_location[1]][1], Unit):
-			value += unit_val
-		elif isinstance(map[tile_location[0]][tile_location[1]][1], Object):
-			value += obj_val
-		if tile_info["ID"] == "005":
-			value += dirt_val
-		elif tile_info["ID"] == "004"
-			value += grass_val
+		if len(map[tile_location[0]][tile_location[1]]) == 2:
+			if isinstance(map[tile_location[0]][tile_location[1]][1], Units):
+				value += unit_val
+			elif isinstance(map[tile_location[0]][tile_location[1]][1], Object):
+				value += obj_val
+	
 
 		value += tile_info["Distance"]	
-
 		tile.set_info("Value", value)
 		
 	def set_tile_info(self, tile, tile_number, distance, predeccesor):

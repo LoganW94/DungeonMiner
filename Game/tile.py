@@ -21,6 +21,8 @@ class Tile:
 		self.tile_number = 0
 		self.distance = 0
 		self.predeccesor = None
+		self.value = 0
+		self.visited = False
 		
 	def tile_info(self):
 		self.tile["Location"] = self.location
@@ -31,11 +33,32 @@ class Tile:
 		self.tile["Distance"] = self.distance
 		self.tile["Visited"] = False
 		self.tile["Predeccesor"] = self.predeccesor
+		self.tile["Value"] = self.value
+		self.tile["Number"] = self.tile_number
 		return(self.tile)
 
 	def set_info(self, key, value):
-		self.tile[key] = value
-			
+		if key == "Value":
+			self.value = value
+		elif key == "Distance":
+			self.distance = value
+		elif key == "Number":
+			self.tile_number = value
+		elif key == "Predeccesor":
+			self.predeccesor = value
+		elif key == "Visited":
+			self.visited = value			
+
+	def find_value(self):
+		value = 0
+		grass_val = 2
+		dirt_val = 1
+		if tile_info["ID"] == "005":
+			value += dirt_val
+		elif tile_info["ID"] == "004":
+			value += grass_val
+
+		self.value = value 			
 
 	def is_passable(self):
 		test = True
