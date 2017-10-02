@@ -22,15 +22,15 @@ class Artificial_Intelligence:
 		self.direction = self.default_state
 		start = unit.unit_info()["Location"]
 		next_tile = Path().find_path(start, map, map_size)
-		#next_tile = start
+		
 
-		if next_tile.tile_info()["Location"][0] > start[0]:
+		if start [0] > start[0]:
 			key = "d"
-		elif next_tile.tile_info()["Location"][0] < start[0]:
+		elif start [0] < start[0]:
 			key = "a"	
-		elif next_tile.tile_info()["Location"][1] > start[1]:
+		elif start [1] > start[1]:
 			key = "s"
-		elif next_tile.tile_info()["Location"][1] < start[1]:
+		elif start [1] < start[1]:
 			key = "w"
 		else:
 			key = "c"			

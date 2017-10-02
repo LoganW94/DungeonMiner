@@ -15,7 +15,7 @@ class Path:
 	def	find_path(self, start, map, map_size):
 		start_tile = map[start[0]][start[1]][0]
 		checked_tiles = self.build_list(start, map, map_size, start_tile)
-	
+		print(checked_tiles)
 		return self.shortest_path(checked_tiles)
 
 	def build_list(self, start, map, map_size, start_tile):
@@ -56,35 +56,7 @@ class Path:
 		return checked_tiles		
 
 	def shortest_path(self, checked_tiles, target = None):
-		path = []
-		reordered_list = []
-
-		while True:
-			lowest_cost = None
-			for x in checked_tiles:
-				if lowest_cost == None:
-					lowest_cost = x
-					reordered_list.append(lowest_cost)
-				elif x.tile_info()["Value"] > lowest_cost.tile_info()["Value"]:
-						lowest_cost = x
-						reordered_list.append(lowest_cost)
-				elif x.tile_info()["Value"] < lowest_cost.tile_info()["Value"]:
-					reordered_list.insert(0,x)		
-				
-				checked_tiles.remove(x)	
-
-			new_path = []	
-			for x in reordered_list:
-				root = x.tile_info()["Predeccesor"]
-				while root != None:
-					if isinstance(root, Tile):
-						root = root.tile_info()["Predeccesor"]
-						new_path.append(root)
-					if root == self.target:
-						break
-										
-			if len(checked_tiles) == 0:
-				break
+		path = checked_tiles
 
 		return path
 
@@ -97,9 +69,11 @@ class Path:
 
 		if len(map[tile_location[0]][tile_location[1]]) == 2:
 			if isinstance(map[tile_location[0]][tile_location[1]][1], Units):
-				value += unit_val
+				val = map[tile_location[0]][tile_location[1]][0].tile_info()["Value"]
+				value += val
 			elif isinstance(map[tile_location[0]][tile_location[1]][1], Object):
-				value += obj_val
+				val = map[tile_location[0]][tile_location[1]][0].tile_info()["Value"]
+				value += val
 	
 
 		value += tile_info["Distance"]	
